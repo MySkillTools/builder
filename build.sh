@@ -4,7 +4,7 @@
 DEBUG_MODE="none"
 
 # Check if an argument was provided for debug mode
-if [ "$1" == "--debug" ]; then
+if [ "$1" = "--debug" ] && [ -n "$2" ]; then
     DEBUG_MODE=$2
 fi
 
@@ -30,17 +30,19 @@ case $DEBUG_MODE in
 
     # Production mode
     "none")
-        echo "Starts in roduction mode..."
+        echo "Starts in production mode..."
         cd frontend
         npm run build
         cd ..
         cd backend
         npm start
         ;;
+
+    # Invalid debug mode
     *)
-    echo "Invalid debug mode specified. Use 'frontend', 'backend', or 'none'."
-    exit 1
-    ;;
+        echo "Invalid debug mode specified. Use 'frontend', 'backend', or 'none'."
+        exit 1
+        ;;
 esac
 
-echo "Script execution completed."
+#echo "Script execution completed."
