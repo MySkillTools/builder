@@ -1,8 +1,7 @@
 @import '../../styles/variables';
 
 .selected-skills {
-    width: 100%; // Ensure the component fills the column
-    // Other styles for the component
+    width: 100%;
 }
 
 .skills-container {
@@ -13,9 +12,25 @@
 
     .row {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 10px;
         width: 100%;
+
+        // Bootstrap breakpoints for grid columns
+        @media (max-width: 575.98px) { // xs screens
+            grid-template-columns: repeat(1, 1fr);
+        }
+        @media (min-width: 576px) and (max-width: 767.98px) { // sm screens
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (min-width: 768px) and (max-width: 991.98px) { // md screens
+            grid-template-columns: repeat(3, 1fr);
+        }
+        @media (min-width: 992px) and (max-width: 1199.98px) { // lg screens
+            grid-template-columns: repeat(4, 1fr);
+        }
+        @media (min-width: 1200px) { // xl and larger screens
+            grid-template-columns: repeat(6, 1fr);
+        }
     }
 
     .cell {
@@ -26,7 +41,7 @@
         flex-direction: column;
         gap: 8px;
         border: 1px solid #ddd;
-        width: 100%; // Ensure cells also take full width
+        width: 100%;
 
         .skill {
             user-select: none;
