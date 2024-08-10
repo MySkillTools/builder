@@ -1,18 +1,46 @@
 #!/bin/bash
 
-#echo "Starting Backend Server..."
-cd frontend
-# Assuming you're using npm and your script is named 'start'
-npm run build
+# Default debug mode
+DEBUG_MODE="none"
 
-# Navigate back to the root directory
-cd ..
+# Check if an argument was provided for debug mode
+if [ "$1" == "--debug" ]; then
+    DEBUG_MODE=$2
+fi
 
-#echo "Starting Frontend Server..."
-#cd frontend
-# Assuming you're using npm and your script is named 'start'
-#npm start &
+echo "Debug mode set to: $DEBUG_MODE"
 
-# Wait for any process to exit
-#wait
-#echo "Servers have been stopped."
+case $DEBUG_MODE in 
+
+    # Debug frontend only
+    "frontend")
+        echo "Starts in frontend debugging mode..."
+        cd frontend
+        #npm install
+        npm start
+        cd ..
+        ;;
+
+    # Debug backend only
+    "backend")
+        echo "Starts in backend debugging mode..."
+        cd backend
+        npm start
+        ;;
+
+    # Production mode
+    "none")
+        echo "Starts in roduction mode..."
+        cd frontend
+        npm run build
+        cd ..
+        cd backend
+        npm start
+        ;;
+    *)
+    echo "Invalid debug mode specified. Use 'frontend', 'backend', or 'none'."
+    exit 1
+    ;;
+esac
+
+echo "Script execution completed."
