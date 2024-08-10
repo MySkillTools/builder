@@ -9,7 +9,7 @@ const Footer = () => {
 
                     {/* Left: Product name */}
                     <div className="col-md-4 d-flex align-items-center justify-content-start">
-                        <span className="text-primary fw-bold mb-0">My Skills Builder</span>&nbsp;
+                        <span className="text-primary fw-bold mb-0">MSB</span>&nbsp;
                         <span className="text-muted mb-0">Version 0.0.1</span>
                     </div>
 
