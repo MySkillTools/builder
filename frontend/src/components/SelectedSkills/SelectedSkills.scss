@@ -1,11 +1,15 @@
 @import '../../styles/variables';
 
+.selected-skills {
+    width: 100%; // Ensure the component fills the column
+    // Other styles for the component
+}
+
 .skills-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    //background-color: #FFFFFF;
 
     .row {
         display: grid;
@@ -21,17 +25,18 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-        border: 1px solid #ddd; // Border to visually separate the cells
+        border: 1px solid #ddd;
+        width: 100%; // Ensure cells also take full width
 
         .skill {
             user-select: none;
-            padding: .375rem .75rem; // Padding similar to Bootstrap's btn class
+            padding: .375rem .75rem;
             background-color: #FFFFFF;
             border: 2px solid $primary;
             color: $primary;
             font-weight: bold;
-            border-radius: .25rem; // Rounded corners like Bootstrap buttons
-            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; // Smooth transitions for hover states
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
             
             &:hover {
                 color: #FFFFFF;
@@ -40,10 +45,9 @@
                 text-decoration: none;
             }
 
-            &:focus,
-            &:active {
-                box-shadow: 0 0 0 0.2rem rgba($primary, .5); // Bootstrap-like focus shadow
-                outline: 0; // Removing default focus outline
+            &:focus, &:active {
+                box-shadow: 0 0 0 0.2rem rgba($primary, .5);
+                outline: 0;
             }
         }
     }

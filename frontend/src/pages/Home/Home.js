@@ -22,7 +22,7 @@ function Home() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className='col-md-6'>
-                            <SelectedSkills cols={3} />
+                            <SelectedSkills cols={5} />
                         </div>  
                     </div>
                 </div>
