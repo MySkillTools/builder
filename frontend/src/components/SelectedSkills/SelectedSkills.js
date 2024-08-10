@@ -87,26 +87,36 @@ const SelectedSkills = () => {
     };
 
     return (
-        <div className="selected-skills-container">
-            <div className="col-controls">
+        <div className="selected-skills-container bg-white p-3">
+   
+            <div className="skills-matrix-wrapper">
+                
+                
+                <div className='d-flex'>
+                <DragDropContext onDragEnd={onDragEnd}>
+
+                    
+
+                    <div className="row-controls align-content-center">
+                    <button className="btn btn-outline-primary" onClick={addRow}>
+                        <i className="fas fa-plus"></i>
+                    </button>
+                    <br></br>
+                    <button className="btn btn-outline-danger" onClick={removeRow}>
+                        <i className="fas fa-minus"></i>
+                    </button>
+                
+                
+                    </div>
+                    <div>
+                    <div className="col-controls d-flex justify-content-center">
                 <button className="btn btn-outline-primary" onClick={addCol}>
-                    <i className="fas fa-plus"></i> Add Column
+                    <i className="fas fa-plus"></i>
                 </button>
                 <button className="btn btn-outline-danger" onClick={removeCol}>
-                    <i className="fas fa-minus"></i> Remove Column
+                    <i className="fas fa-minus"></i>
                 </button>
             </div>
-            <div className="skills-matrix-wrapper">
-                <div className="row-controls">
-                    <button className="btn btn-outline-primary" onClick={addRow}>
-                        <i className="fas fa-plus"></i> Add Row
-                    </button>
-                    <button className="btn btn-outline-danger" onClick={removeRow}>
-                        <i className="fas fa-minus"></i> Remove Row
-                    </button>
-                </div>
-                
-                <DragDropContext onDragEnd={onDragEnd}>
                     <div className="selected-skills skills-container">
                         {skillsMatrix.map((row, rowIndex) => (
                             <div className="row" key={`row-${rowIndex}`}>
@@ -118,6 +128,8 @@ const SelectedSkills = () => {
                                                 {...provided.droppableProps}
                                                 className="cell"
                                             >
+                                                <small className='text-muted fw-bold'>Row {rowIndex+1}, Col {cellIndex+1}</small>
+
                                                 {cell.map((skill, index) => (
                                                     <Draggable key={skill.id} draggableId={skill.id} index={index}>
                                                         {(provided) => (
@@ -141,8 +153,11 @@ const SelectedSkills = () => {
                             </div>
                         ))}
                     </div>
+                    </div>
                 </DragDropContext>
             </div>
+            </div>
+            
         </div>
     );
 };

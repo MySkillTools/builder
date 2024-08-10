@@ -29,7 +29,7 @@
             grid-template-columns: repeat(4, 1fr);
         }
         @media (min-width: 1200px) { // xl and larger screens
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(6, 1fr); // Adjusted to ensure 3 columns fill the width
         }
     }
 
