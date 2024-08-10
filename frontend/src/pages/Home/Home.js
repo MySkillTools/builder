@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from '../../components/NavBar/Navbar';
+import { SuperHeader, Navbar } from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer'; 
 
 //import EventFilter from '../../components/EventFilter/EventFilter';
@@ -9,9 +9,10 @@ function Home() {
     return (
         <div id="app">
             
+            <SuperHeader />
             <Navbar />
             { /*
-            <SuperHeader />
+           
             
             
             <div className="content">

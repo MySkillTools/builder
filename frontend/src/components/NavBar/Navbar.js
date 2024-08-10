@@ -7,22 +7,24 @@ import './Navbar.scss';
 //import institution_logo from '../../assets/images/test_uni_logo.png';
 
 // SuperHeader Component
-/*
+
 const SuperHeader = () => {
     return (
         <header className="bg-white super-header">
             <div className="container-fluid" style={{ paddingTop: '5px', paddingBottom: '5px'}}>
                 <div className="d-flex justify-content-between align-items-center">
                     <a href="#">
-                        <img src={institution_logo} alt="Institution Logo" style={{ height: '50px' }} />
+                        <img src='#' alt="Institution Logo" style={{ height: '50px' }} />
                     </a>
+                    {/*
                     <h5 className="mb-0 fw-bold">Event Management Platform</h5>
+                    */}
                 </div>
             </div>
         </header>
     );
 };
-*/
+
 
 // Navbar Component
 const Navbar = () => {
@@ -43,32 +45,37 @@ const Navbar = () => {
                             <Link className="nav-link navbar-border active" to="/">Home</Link>
                         </li>
                         
-                        {/* My Organizations */}
+                        {/* About */}
                         <li className="nav-item">
-                            <Link className="nav-link navbar-border" to="/myOrganizations">My Organizations</Link>
+                            <Link className="nav-link navbar-border" to="/about">About</Link>
                         </li>
                         
-                        {/* My Events */}
+                        {/* FAQs */}
                         <li className="nav-item">
-                            <Link className="nav-link navbar-border" to="/myEvents">My Events</Link>
+                            <Link className="nav-link navbar-border" to="/myEvents">FAQs</Link>
                         </li>
 
                         {/* System Administration */}
+                        {/* 
                         <li className="nav-item">
                             <Link className="nav-link navbar-border" to="/admin">System Administration</Link>
                         </li>
+                        */}
                     </ul>
                     
                     <ul className="navbar-nav ms-auto">
 
-                        {/* Login */}
-                        {/* 
+                        {/* GitHub */}
+                        
                         <li className="nav-item">
-                            <Link className="nav-link navbar-border" to="/user/login">Login</Link>
+                            <a className="nav-link navbar-border" href="https://github.com/stewebb/my-skills-builder" target="_blank">
+                                <i className="fab fa-github"></i>&nbsp;GitHub
+                            </a>
                         </li>
-                        */}
+                        
                         
                         {/* Notifications */}
+                        {/*
                         <li className="nav-item">
                             <Link className="nav-link navbar-border position-relative" to="/notifications">
                                 <i className="fa fa-bell"></i>
@@ -80,8 +87,10 @@ const Navbar = () => {
                                 )}
                             </Link>
                         </li>
+                        */}
                         
                         {/* User Dropdown */}
+                        {/*
                         <li className="nav-item dropdown">
                             <a className="nav-link navbar-border" href="#" id="navbarDropdownUserLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 User <i className="fa-solid fa-caret-down"></i>
@@ -92,6 +101,7 @@ const Navbar = () => {
                                 <li><Link className="dropdown-item" to="/user/logout">Logout</Link></li>
                             </ul>
                         </li>
+                        */}
                     </ul>
                 </div>
             </div>
@@ -100,4 +110,4 @@ const Navbar = () => {
 };
 
 // Export both components
-export { Navbar };
+export { SuperHeader, Navbar };

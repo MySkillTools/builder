@@ -1,17 +1,32 @@
 // Define theme colors
 $primary: #7D4E89;
-//$secondary: #1695a0;
 
-// Define alpha-modified colors for primary
-$primary-100: lighten($primary, 60%);
-$primary-200: lighten($primary, 45%);
-$primary-300: lighten($primary, 30%);
-$primary-400: lighten($primary, 15%);
-$primary-500: $primary;
-$primary-600: darken($primary, 15%);
-$primary-700: darken($primary, 30%);
-$primary-800: darken($primary, 45%);
-$primary-900: darken($primary, 60%);
+// Lighten Steps
+$primary-100: lighten($primary, 90%);
+$primary-200: lighten($primary, 80%);
+$primary-300: lighten($primary, 70%);
+$primary-400: lighten($primary, 60%);
+$primary-500: lighten($primary, 50%);
+$primary-600: lighten($primary, 40%);
+$primary-700: lighten($primary, 30%);
+$primary-800: lighten($primary, 20%);
+$primary-900: lighten($primary, 10%);
+
+// Base Color
+$primary-1000: $primary;
+
+// Darken Steps
+$primary-1100: darken($primary, 10%);
+$primary-1200: darken($primary, 20%);
+$primary-1300: darken($primary, 30%);
+$primary-1400: darken($primary, 40%);
+$primary-1500: darken($primary, 50%);
+$primary-1600: darken($primary, 60%);
+$primary-1700: darken($primary, 70%);
+$primary-1800: darken($primary, 80%);
+$primary-1900: darken($primary, 90%);
+$primary-2000: darken($primary, 100%);
+
 
 // Define alpha-modified colors for secondary
 /*
