@@ -10,18 +10,7 @@ import './Navbar.scss';
 
 const SuperHeader = () => {
     return (
-        <header className="bg-white super-header">
-            <div className="container-fluid" style={{ paddingTop: '5px', paddingBottom: '5px'}}>
-                <div className="d-flex justify-content-between align-items-center">
-                    <a href="#">
-                        <img src='#' alt="Institution Logo" style={{ height: '50px' }} />
-                    </a>
-                    {/*
-                    <h5 className="mb-0 fw-bold">Event Management Platform</h5>
-                    */}
-                </div>
-            </div>
-        </header>
+        <div></div>
     );
 };
 
@@ -29,7 +18,7 @@ const SuperHeader = () => {
 // Navbar Component
 const Navbar = () => {
 
-    const notificationCount = 5;
+    //const notificationCount = 5;
 
     return (
         <nav className="navbar navbar-expand-md no-padding pt-0 pb-0">
@@ -54,13 +43,6 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link navbar-border" to="/myEvents">FAQs</Link>
                         </li>
-
-                        {/* System Administration */}
-                        {/* 
-                        <li className="nav-item">
-                            <Link className="nav-link navbar-border" to="/admin">System Administration</Link>
-                        </li>
-                        */}
                     </ul>
                     
                     <ul className="navbar-nav ms-auto">
@@ -73,35 +55,6 @@ const Navbar = () => {
                             </a>
                         </li>
                         
-                        
-                        {/* Notifications */}
-                        {/*
-                        <li className="nav-item">
-                            <Link className="nav-link navbar-border position-relative" to="/notifications">
-                                <i className="fa fa-bell"></i>
-                                {notificationCount > 0 && (
-                                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
-                                        {notificationCount}
-                                        <span className="visually-hidden">unread messages</span>
-                                    </span>
-                                )}
-                            </Link>
-                        </li>
-                        */}
-                        
-                        {/* User Dropdown */}
-                        {/*
-                        <li className="nav-item dropdown">
-                            <a className="nav-link navbar-border" href="#" id="navbarDropdownUserLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                User <i className="fa-solid fa-caret-down"></i>
-                            </a>
-                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserLink">
-                                <li><Link className="dropdown-item" to="/user/profile">Profile</Link></li>
-                                <li><Link className="dropdown-item" to="/user/settings">Settings</Link></li>
-                                <li><Link className="dropdown-item" to="/user/logout">Logout</Link></li>
-                            </ul>
-                        </li>
-                        */}
                     </ul>
                 </div>
             </div>

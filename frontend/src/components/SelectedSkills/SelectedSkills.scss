@@ -1,6 +1,6 @@
 @import '../../styles/variables';
 
-.selected-skills {
+.full-width {
     width: 100%;
 }
 
@@ -16,21 +16,19 @@
         width: 100%;
 
         // Bootstrap breakpoints for grid columns
+        
         @media (max-width: 575.98px) { // xs screens
             grid-template-columns: repeat(1, 1fr);
         }
         @media (min-width: 576px) and (max-width: 767.98px) { // sm screens
             grid-template-columns: repeat(2, 1fr);
         }
-        @media (min-width: 768px) and (max-width: 991.98px) { // md screens
+        @media (min-width: 768px) and (max-width: 991.98px) { // sm screens
             grid-template-columns: repeat(3, 1fr);
         }
-        @media (min-width: 992px) and (max-width: 1199.98px) { // lg screens
+        @media (min-width: 992px) { // lg screens
             grid-template-columns: repeat(4, 1fr);
-        }
-        @media (min-width: 1200px) { // xl and larger screens
-            grid-template-columns: repeat(6, 1fr); // Adjusted to ensure 3 columns fill the width
-        }
+        } 
     }
 
     .cell {
@@ -47,7 +45,7 @@
             user-select: none;
             padding: .375rem .75rem;
             background-color: #FFFFFF;
-            border: 2px solid $primary;
+            border: 1px dashed $primary;
             color: $primary;
             font-weight: bold;
             border-radius: .25rem;
