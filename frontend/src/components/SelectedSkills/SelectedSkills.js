@@ -97,16 +97,21 @@ const SelectedSkills = () => {
                         {/* Buttons to add/remove rows */}
                         <div className="align-content-center">
 
-                            {/* Add row */}
-                            <div className='mb-1'>
+                            {/*
+                            <div className='justify-content-center fw-bold'>
+                                Row
+                            </div>
+                            */}
+                            
+                            <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                
+                                {/* Add row */}
                                 <button className="btn btn-outline-primary" onClick={addRow}>
                                     <i className="fas fa-plus"></i>
-                                </button>
-                            </div>
-                            
-                            {/* Remove row */}
-                            <div>
-                                <button className="btn btn-outline-danger" onClick={removeRow}>
+                                 </button>
+                                
+                                {/* Remove row */}
+                                 <button className="btn btn-outline-danger" onClick={removeRow}>
                                     <i className="fas fa-minus"></i>
                                 </button>
                             </div>
