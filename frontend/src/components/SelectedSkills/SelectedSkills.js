@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './SelectedSkills.scss';
 
-const flattenSkills = [
-    { id: 'skill-1', name: 'JavaScript' }, { id: 'skill-2', name: 'React' },
-    { id: 'skill-3', name: 'Node.js' }, { id: 'skill-4', name: 'Python' },
-    { id: 'skill-5', name: 'Django' }, { id: 'skill-6', name: 'Flask' },
-    { id: 'skill-7', name: 'Ruby' }, { id: 'skill-8', name: 'Rails' },
-    { id: 'skill-9', name: 'Java' }, { id: 'skill-10', name: 'Spring Boot' },
-    { id: 'skill-11', name: 'Angular' }
+const initialSkills = [
+    [
+        [{ id: 'skill-1', name: 'JavaScript' }, { id: 'skill-2', name: 'React' }],
+        [{ id: 'skill-3', name: 'Node.js' }],
+        [{ id: 'skill-4', name: 'Python' }],
+    ],
+    [
+        [{ id: 'skill-5', name: 'Django' }],
+        [{ id: 'skill-6', name: 'Flask' }, { id: 'skill-7', name: 'Ruby' }],
+        [{ id: 'skill-8', name: 'Rails' }],
+    ],
+    [
+        [{ id: 'skill-9', name: 'Java' }],
+        [{ id: 'skill-10', name: 'Spring Boot' }],
+        [{ id: 'skill-11', name: 'Angular' }],
+    ]
 ];
 
 const SelectedSkills = () => {
-    const [matrixSize, setMatrixSize] = useState(3);
-    const [skillsMatrix, setSkillsMatrix] = useState([]);
-
-    useEffect(() => {
-        const newSkillsMatrix = [];
-        for (let i = 0; i < matrixSize; i++) {
-            newSkillsMatrix.push([]);
-            for (let j = 0; j < matrixSize; j++) {
-                const skillIndex = (i * matrixSize + j) % flattenSkills.length;
-                newSkillsMatrix[i].push([flattenSkills[skillIndex]]);
-            }
-        }
-        setSkillsMatrix(newSkillsMatrix);
-    }, [matrixSize]);
+    const [skillsMatrix, setSkillsMatrix] = useState(initialSkills);
 
     const reorderSkills = (source, destination) => {
         const sourceIndices = source.droppableId.split('-').map(Number);
@@ -36,34 +32,71 @@ const SelectedSkills = () => {
         const destCell = newSkillsMatrix[destIndices[0]][destIndices[1]];
         const [removed] = sourceCell.splice(source.index, 1);
 
-        destCell.splice(destination.index, 0, removed);
+        if (source.droppableId !== destination.droppableId) {
+            destCell.splice(destination.index, 0, removed);
+        } else {
+            sourceCell.splice(destination.index, 0, removed);
+        }
+
         return newSkillsMatrix;
     };
 
     const onDragEnd = (result) => {
-        const { source, destination } = result;
-        if (!destination) return;
-        if (source.droppableId === destination.droppableId && source.index === destination.index) return;
-        
-        const newSkillsMatrix = reorderSkills(source, destination);
+        if (!result.destination) {
+            return;
+        }
+
+        if (
+            result.source.droppableId !== result.destination.droppableId ||
+            result.source.index !== result.destination.index
+        ) {
+            const newSkillsMatrix = reorderSkills(result.source, result.destination);
+            setSkillsMatrix(newSkillsMatrix);
+        }
+    };
+
+    // Function to add a new row
+    const addRow = () => {
+        const lastRow = skillsMatrix[skillsMatrix.length - 1];
+        const newRow = lastRow.map(() => []); // Create a new row with the same number of columns
+        setSkillsMatrix([...skillsMatrix, newRow]);
+    };
+
+    // Function to remove the last row
+    const removeRow = () => {
+        if (skillsMatrix.length > 1) {
+            setSkillsMatrix(skillsMatrix.slice(0, -1));
+        }
+    };
+
+    // Function to add a new column to each row
+    const addCol = () => {
+        const newSkillsMatrix = skillsMatrix.map(row => [...row, []]);
         setSkillsMatrix(newSkillsMatrix);
+    };
+
+    // Function to remove the last column from each row
+    const removeCol = () => {
+        if (skillsMatrix[0].length > 1) {
+            const newSkillsMatrix = skillsMatrix.map(row => row.slice(0, -1));
+            setSkillsMatrix(newSkillsMatrix);
+        }
     };
 
     return (
         <>
-            <input
-                type="number"
-                value={matrixSize}
-                onChange={(e) => setMatrixSize(Math.max(1, Number(e.target.value)))}
-                min="1"
-                className="matrix-size-input"
-            />
+            <div className="controls">
+                <button onClick={addRow}>Add Row</button>
+                <button onClick={removeRow}>Remove Last Row</button>
+                <button onClick={addCol}>Add Column</button>
+                <button onClick={removeCol}>Remove Last Column</button>
+            </div>
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="selected-skills skills-container">
                     {skillsMatrix.map((row, rowIndex) => (
                         <div className="row" key={`row-${rowIndex}`}>
                             {row.map((cell, cellIndex) => (
-                                <Droppable droppableId={`${rowIndex}-${cellIndex}`} key={`cell-${rowIndex}-${cellIndex}`}>
+                                <Droppable droppableId={`${rowIndex}-${cellIndex}`} key={`cell-${rowIndex}-${cellIndex}`} direction="vertical">
                                     {(provided) => (
                                         <div
                                             ref={provided.innerRef}
@@ -78,6 +111,7 @@ const SelectedSkills = () => {
                                                             {...provided.draggableProps}
                                                             {...provided.dragHandleProps}
                                                             className="skill"
+                                                            style={provided.draggableProps.style}
                                                         >
                                                             {skill.name}
                                                         </div>
