@@ -17,8 +17,18 @@ function Home() {
             <div className="content">
                 <div className="container-fluid">
                     <div className="row">
-                        <div className='col-md-6'>
-                            <SelectedSkills />
+                        <div className='col-md-6 p-3'>
+
+                            {/* Skill Selector */}
+                            <div className="card">
+                                <div className="card-body">
+                                    <h4 className="card-title fw-bold">Skill Selector</h4>
+                                    <SelectedSkills />
+                                </div>
+                            </div>
+
+
+                            
                         </div>  
                     </div>
                 </div>

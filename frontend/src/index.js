@@ -1,17 +1,36 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactDOM from 'react-dom/client';
-//import './index.css';
-import App from './App';
-//import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+// Styling
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
+import './styles/style.scss';
+
+// Lazy loaded components
+const Home = lazy(() => import('./pages/Home/Home'));
+const Settings = lazy(() => import('./pages/Settings/Settings'));
+
+// App component with routing
+function App() {
+    return (
+        <Router>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/settings" element={<Settings />} />
+                </Routes>
+            </Suspense>
+        </Router>
+    );
+}
+
+// Root rendering
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    //<React.StrictMode>
-        <App />
-    //</React.StrictMode>
+    <App />
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-//reportWebVitals();
+// Performance and diagnostics (commented out, optional)
+// import reportWebVitals from './reportWebVitals';
+// reportWebVitals(console.log);

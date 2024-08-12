@@ -3,22 +3,8 @@ import { Link } from 'react-router-dom';
 import '../../styles/style.scss';
 import './Navbar.scss';
 
-//import '@fortawesome/fontawesome-free/css/all.min.css'
-//import institution_logo from '../../assets/images/test_uni_logo.png';
-
-// SuperHeader Component
-
-//const SuperHeader = () => {
-//    return (
-//        <div></div>
-//    );
-//};
-
-
 // Navbar Component
 const Navbar = () => {
-
-    //const notificationCount = 5;
 
     return (
         <nav className="navbar navbar-expand-md no-padding pt-0 pb-0">
@@ -73,8 +59,5 @@ const Navbar = () => {
         </nav>
     );
 };
-
-// Export both components
-//export { SuperHeader, Navbar };
 
 export default Navbar ;
