@@ -1,9 +1,9 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { produce } from 'immer';
-import './SelectedSkills.scss';
+import './SkillSelector.scss';
 
-const SelectedSkills = ({ skillsMatrix, setSkillsMatrix }) => {
+const SkillSelector = ({ skillsMatrix, setSkillsMatrix }) => {
     const reorderSkills = (source, destination) => {
         setSkillsMatrix(currentMatrix => produce(currentMatrix, draftMatrix => {
             const sourceIndices = source.droppableId.split('-').map(Number);
@@ -74,7 +74,7 @@ const SelectedSkills = ({ skillsMatrix, setSkillsMatrix }) => {
                             </div>
                         </div>
                         
-                        <div className='p-3 full-width'>
+                        <div className='full-width'>
                             <div className="d-flex justify-content-center">
                                 <div className="btn-group" role="group">
                                     <button className="btn btn-outline-primary" onClick={addCol}>
@@ -124,4 +124,4 @@ const SelectedSkills = ({ skillsMatrix, setSkillsMatrix }) => {
     );
 };
 
-export default SelectedSkills;
+export default SkillSelector;

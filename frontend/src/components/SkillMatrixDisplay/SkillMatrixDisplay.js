@@ -2,19 +2,23 @@ import React from 'react';
 
 const SkillMatrixDisplay = ({ skillsMatrix }) => {
     return (
-        <div className="skill-matrix-display">
-            {skillsMatrix.map((row, rowIndex) => (
-                <div key={`display-row-${rowIndex}`} className="row">
-                    {row.map((cell, cellIndex) => (
-                        <div key={`display-cell-${rowIndex}-${cellIndex}`} className="col">
-                            {cell.map(skill => (
-                                <span key={skill.id} className="badge bg-secondary m-1">{skill.name}</span>
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            ))}
-        </div>
+        <table className="table table-bordered skill-matrix-display">
+            <tbody>
+                {skillsMatrix.map((row, rowIndex) => (
+                    <tr key={`display-row-${rowIndex}`}>
+                        {row.map((cell, cellIndex) => (
+                            <td key={`display-cell-${rowIndex}-${cellIndex}`}>
+                                {cell.map((skill, index) => (
+                                    <span key={skill.id}>
+                                        {skill.name}{index < cell.length - 1 ? ', ' : ''}
+                                    </span>
+                                ))}
+                            </td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     );
 };
 

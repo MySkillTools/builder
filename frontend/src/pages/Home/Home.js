@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer'; 
-import SelectedSkills from '../../components/SelectedSkills/SelectedSkills';
+
+import SkillSelector from '../../components/SkillSelector/SkillSelector';
 import SkillMatrixDisplay from '../../components/SkillMatrixDisplay/SkillMatrixDisplay'; // Make sure the import path is correct
 
 function Home() {
@@ -32,18 +33,25 @@ function Home() {
             <div className="content">
                 <div className="container-fluid">
                     <div className="row">
+
                         <div className='col-md-6 p-3'>
+
+                        </div>
+
+                        <div className='col-md-6 p-3'>
+
+                            {/* Skill Selector */}
                             <div className="card mb-3">
                                 <div className="card-body">
                                     <h4 className="card-title fw-bold">Skill Selector</h4>
-                                    <SelectedSkills skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
+                                    <SkillSelector skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
                                 </div>
                             </div>
 
-                            {/* New Card for displaying the skill matrix using SkillMatrixDisplay component */}
+                            {/* Selected Skills */}
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title fw-bold">Skill Matrix Display</h4>
+                                    <h4 className="card-title fw-bold">Selected Skills</h4>
                                     <SkillMatrixDisplay skillsMatrix={skillsMatrix} />
                                 </div>
                             </div>
