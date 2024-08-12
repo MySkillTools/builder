@@ -8,32 +8,32 @@ import './SkillSelector.scss';
  * @param {Array<Array<Array<Object>>>} skillsMatrix - The matrix of skills.
  * @param {Function} setSkillsMatrix - State setter function for the skills matrix.
  */
-
 const SkillSelector = ({ skillsMatrix, setSkillsMatrix }) => {
 
     // Function to reorder skills within the matrix when an item is dragged and dropped.
     const reorderSkills = (source, destination) => {
         setSkillsMatrix(currentMatrix => produce(currentMatrix, draftMatrix => {
             const sourceIndices = source.droppableId.split('-').map(Number);
-            const destIndices = destination.droppableId.split('-').map(Number);
-            const sourceCell = draftMatrix[sourceIndices[0]][sourceIndices[1]];
-            const destCell = draftMatrix[destIndices[0]][destIndices[1]];
-            const [removed] = sourceCell.splice(source.index, 1);
-
-            if (source.droppableId !== destination.droppableId) {
-                destCell.splice(destination.index, 0, removed);
+            if (destination.droppableId === 'trash-bin') {
+                // If dropped in the trash bin, remove the item from its original cell
+                draftMatrix[sourceIndices[0]][sourceIndices[1]].splice(source.index, 1);
             } else {
-                sourceCell.splice(destination.index, 0, removed);
+                const destIndices = destination.droppableId.split('-').map(Number);
+                const sourceCell = draftMatrix[sourceIndices[0]][sourceIndices[1]];
+                const destCell = draftMatrix[destIndices[0]][destIndices[1]];
+                const [removed] = sourceCell.splice(source.index, 1);
+                destCell.splice(destination.index, 0, removed);
             }
         }));
     };
 
     // Handles the end of a drag operation, applying the reorder function.
     const onDragEnd = (result) => {
-        if (!result.destination) {
-            return;
+        const { source, destination } = result;
+        if (!destination) {
+            return; // dropped outside the list
         }
-        reorderSkills(result.source, result.destination);
+        reorderSkills(source, destination);
     };
 
     // Adds a new row to the skills matrix.
@@ -74,47 +74,30 @@ const SkillSelector = ({ skillsMatrix, setSkillsMatrix }) => {
     return (
         <div className="selected-skills-container bg-white full-width">
             <div className="skills-matrix-wrapper full-width">
-
-                {/* Wrapper for layout management */}
                 <div className='d-flex full-width'>
-
-                    {/* Drag and drop context to manage draggable elements */}
                     <DragDropContext onDragEnd={onDragEnd}>
-
-                        {/* Column management buttons */}
                         <div className="align-content-center">
                             <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-
-                                {/* Add row icon */}
                                 <button className="btn btn-outline-primary" onClick={addRow}>
                                     <i className="fas fa-plus"></i>
                                 </button>
-
-                                {/* Remove row icon */}
                                 <button className="btn btn-outline-danger" onClick={removeRow}>
                                     <i className="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
-                        
-                        {/* Row management buttons */}
                         <div className='full-width'>
                             <div className="d-flex justify-content-center">
                                 <div className="btn-group" role="group">
-
-                                    {/* Add column icon */}
                                     <button className="btn btn-outline-primary" onClick={addCol}>
                                         <i className="fas fa-plus"></i>
                                     </button>
-
-                                    {/* Remove column icon */}
                                     <button className="btn btn-outline-danger" onClick={removeCol}>
-                                        <i className="fas fa-minus"></i> 
+                                        <i className="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Skills display area */}
                             <div className="skills-container p-3 full-width">
                                 {skillsMatrix.map((row, rowIndex) => (
                                     <div className="row" key={`row-${rowIndex}`}>
@@ -145,17 +128,23 @@ const SkillSelector = ({ skillsMatrix, setSkillsMatrix }) => {
                                     </div>
                                 ))}
                             </div>
-                            {/* */}
+
+                            <Droppable droppableId="trash-bin">
+                                {(provided) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.droppableProps}
+                                        className="trash-bin"
+                                    >
+                                        <i className="fa fa-trash-alt" aria-hidden="true"></i>
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
 
                         </div>
-                        {/* */}
-
                     </DragDropContext>
-                    {/* */}
-                    
                 </div>
-                {/* */}
-
             </div>
         </div>
     );

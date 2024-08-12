@@ -65,3 +65,22 @@
         }
     }
 }
+
+.trash-bin {
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px dashed var(--bs-red); // Dashed border with a danger color
+    color: var(--bs-red); // Text and icon color in danger style
+    text-align: center; // Center the text and icon
+    min-height: 50px; // Minimum height to make it visible even when empty
+    display: flex; // Using flex to center content vertically and horizontally
+    justify-content: center;
+    align-items: center;
+    margin: 10px; // Some margin to separate it from other elements
+    //background-color: var(red-400); // Light red background for more emphasis on 'danger'
+
+    i.fa-trash-alt { // Styling the FontAwesome icon
+        margin-right: 5px; // Margin right to space out the text from the icon
+        font-size: 24px; // Larger icon size
+    }
+}
