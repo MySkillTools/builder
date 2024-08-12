@@ -10,16 +10,7 @@ import './Navbar.scss';
 
 const SuperHeader = () => {
     return (
-        <header className="bg-white super-header">
-            <div className="container-fluid" style={{ paddingTop: '5px', paddingBottom: '5px'}}>
-                <div className="d-flex justify-content-between align-items-center">
-                    <Link to="/">
-                        <img src="/images/MSB_Wide.png" alt="MSB Logo" style={{ height: '50px' }} />
-                    </Link>
-                    <h5 className="mb-0 fw-bold text-primary">Build Your CV Skills</h5>
-                </div>
-            </div>
-        </header>
+        <div></div>
     );
 };
 
