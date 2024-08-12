@@ -3,7 +3,7 @@ import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer'; 
 
 import SkillSelector from '../../components/SkillSelector/SkillSelector';
-import SkillMatrixDisplay from '../../components/SkillMatrixDisplay/SkillMatrixDisplay'; // Make sure the import path is correct
+import SelectedSkills from '../../components/SelectedSkills/SelectedSkills';
 
 function Home() {
     // Initial skill matrix lifted to the parent component
@@ -52,7 +52,7 @@ function Home() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title fw-bold">Selected Skills</h4>
-                                    <SkillMatrixDisplay skillsMatrix={skillsMatrix} />
+                                    <SelectedSkills skillsMatrix={skillsMatrix} />
                                 </div>
                             </div>
                         </div>  

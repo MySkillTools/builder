@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SkillMatrixDisplay = ({ skillsMatrix }) => {
+const SelectedSkills = ({ skillsMatrix }) => {
     return (
         <table className="table table-bordered skill-matrix-display">
             <tbody>
@@ -22,4 +22,4 @@ const SkillMatrixDisplay = ({ skillsMatrix }) => {
     );
 };
 
-export default SkillMatrixDisplay;
+export default SelectedSkills;
