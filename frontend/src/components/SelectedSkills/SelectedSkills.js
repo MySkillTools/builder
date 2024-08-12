@@ -1,30 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { produce } from 'immer';
 import './SelectedSkills.scss';
 
-// Initial matrix of skills, structured as an array of rows, where each row is an array of cells containing skills.
-const initialSkills = [
-    [
-        [{ id: 'skill-1', name: 'JavaScript' }, { id: 'skill-2', name: 'React' }],
-        [{ id: 'skill-3', name: 'Node.js' }],
-        [{ id: 'skill-4', name: 'Python' }],
-    ],
-    [
-        [{ id: 'skill-5', name: 'Django' }],
-        [{ id: 'skill-6', name: 'Flask' }, { id: 'skill-7', name: 'Ruby' }],
-        [{ id: 'skill-8', name: 'Rails' }],
-    ],
-    [
-        [{ id: 'skill-9', name: 'Java' }],
-        [{ id: 'skill-10', name: 'Spring Boot' }],
-        [{ id: 'skill-11', name: 'Angular' }],
-    ]
-];
-
-const SelectedSkills = () => {
-    const [skillsMatrix, setSkillsMatrix] = useState(initialSkills);
-
+const SelectedSkills = ({ skillsMatrix, setSkillsMatrix }) => {
     const reorderSkills = (source, destination) => {
         setSkillsMatrix(currentMatrix => produce(currentMatrix, draftMatrix => {
             const sourceIndices = source.droppableId.split('-').map(Number);
@@ -45,15 +24,8 @@ const SelectedSkills = () => {
         if (!result.destination) {
             return;
         }
-
         reorderSkills(result.source, result.destination);
     };
-
-    //const moveToFirstCell = (items) => {
-    //    setSkillsMatrix(currentMatrix => produce(currentMatrix, draftMatrix => {
-    //        draftMatrix[0][0].push(...items);
-    //    }));
-    //};
 
     const addRow = () => {
         setSkillsMatrix(currentMatrix => produce(currentMatrix, draftMatrix => {
@@ -90,68 +62,38 @@ const SelectedSkills = () => {
         <div className="selected-skills-container bg-white full-width">
             <div className="skills-matrix-wrapper full-width">
                 <div className='d-flex full-width'>
-
-                    {/* Dragger content */}
                     <DragDropContext onDragEnd={onDragEnd}>
-                    
-                        {/* Buttons to add/remove rows */}
                         <div className="align-content-center">
-
-                            {/*
-                            <div className='justify-content-center fw-bold'>
-                                Row
-                            </div>
-                            */}
-                            
                             <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-                                
-                                {/* Add row */}
                                 <button className="btn btn-outline-primary" onClick={addRow}>
                                     <i className="fas fa-plus"></i>
-                                 </button>
-                                
-                                {/* Remove row */}
-                                 <button className="btn btn-outline-danger" onClick={removeRow}>
+                                </button>
+                                <button className="btn btn-outline-danger" onClick={removeRow}>
                                     <i className="fas fa-minus"></i>
                                 </button>
                             </div>
                         </div>
                         
                         <div className='p-3 full-width'>
-
-                            {/* Buttons to add/remove cols */}
                             <div className="d-flex justify-content-center">
                                 <div className="btn-group" role="group">
-
-                                    {/* Add col */}
                                     <button className="btn btn-outline-primary" onClick={addCol}>
                                         <i className="fas fa-plus"></i>
                                     </button>
-                                
-                                    {/* Remove col */}
                                     <button className="btn btn-outline-danger" onClick={removeCol}>
                                         <i className="fas fa-minus"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            {/* The skill matrix */}
                             <div className="skills-container p-3 full-width">
-
-                                {/* Iterate rows */}
                                 {skillsMatrix.map((row, rowIndex) => (
                                     <div className="row" key={`row-${rowIndex}`}>
-
-                                        {/* Iterate cols */}
                                         {row.map((cell, cellIndex) => (
-
-                                            // A cell
-                                            <Droppable droppableId={`${rowIndex}-${cellIndex}`} key={`cell-${rowIndex}-${cellIndex}`} direction="vertical">
+                                            <Droppable droppableId={`${rowIndex}-${cellIndex}`} key={`cell-${rowIndex}-${cellIndex}`}>
                                                 {(provided) => (
                                                     <div ref={provided.innerRef} {...provided.droppableProps} className="cell">
                                                         <small className='text-muted fw-bold'>Row {rowIndex+1}, Col {cellIndex+1}</small>
-                                                        
-                                                        {/* Each cell contains zero or more elements */}
                                                         {cell.map((skill, index) => (
                                                             <Draggable key={skill.id} draggableId={skill.id} index={index}>
                                                                 {(provided) => (
@@ -160,7 +102,6 @@ const SelectedSkills = () => {
                                                                         {...provided.draggableProps}
                                                                         {...provided.dragHandleProps}
                                                                         className="skill"
-                                                                        style={provided.draggableProps.style}
                                                                     >
                                                                         {skill.name}
                                                                     </div>
@@ -176,11 +117,9 @@ const SelectedSkills = () => {
                                 ))}
                             </div>
                         </div>
-
                     </DragDropContext>
                 </div>
             </div>
-            
         </div>
     );
 };
