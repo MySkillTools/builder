@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer'; 
 import SelectedSkills from '../../components/SelectedSkills/SelectedSkills';
+import SkillMatrixDisplay from '../../components/SkillMatrixDisplay/SkillMatrixDisplay'; // Make sure the import path is correct
 
 function Home() {
     // Initial skill matrix lifted to the parent component
@@ -25,20 +26,6 @@ function Home() {
 
     const [skillsMatrix, setSkillsMatrix] = useState(initialSkills);
 
-    const renderSkillMatrix = () => {
-        return skillsMatrix.map((row, rowIndex) => (
-            <div key={`display-row-${rowIndex}`} className="row">
-                {row.map((cell, cellIndex) => (
-                    <div key={`display-cell-${rowIndex}-${cellIndex}`} className="col">
-                        {cell.map(skill => (
-                            <span key={skill.id} className="badge bg-secondary m-1">{skill.name}</span>
-                        ))}
-                    </div>
-                ))}
-            </div>
-        ));
-    };
-
     return (
         <div id="app">
             <Navbar />
@@ -46,7 +33,6 @@ function Home() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className='col-md-6 p-3'>
-
                             <div className="card mb-3">
                                 <div className="card-body">
                                     <h4 className="card-title fw-bold">Skill Selector</h4>
@@ -54,13 +40,11 @@ function Home() {
                                 </div>
                             </div>
 
-                            {/* New Card for displaying the skill matrix */}
+                            {/* New Card for displaying the skill matrix using SkillMatrixDisplay component */}
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title fw-bold">Skill Matrix Display</h4>
-                                    <div className="skill-matrix-display">
-                                        {renderSkillMatrix()}
-                                    </div>
+                                    <SkillMatrixDisplay skillsMatrix={skillsMatrix} />
                                 </div>
                             </div>
                         </div>  
