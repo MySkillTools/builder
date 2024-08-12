@@ -19,7 +19,7 @@ const Navbar = () => {
 
                         {/* Logo */}
                         <li className="nav-item px-1">
-                            <img src='/images/MSB_purple.png' style={{maxHeight: '40px'}}></img>
+                            <img src='/images/MSB_Wide.png' style={{maxHeight: '40px'}}></img>
                         </li>
 
                         {/* Home */}
@@ -48,8 +48,8 @@ const Navbar = () => {
 
                         {/* GitHub */}
                         <li className="nav-item">
-                            <a className="nav-link navbar-border" href="https://github.com/stewebb/my-skills-builder" target="_blank">
-                                <i className="fab fa-github"></i>&nbsp;GitHub
+                            <a className="nav-link navbar-border" href="https://github.com/stewebb/MSB" target="_blank">
+                                <i className="fab fa-github"></i>&nbsp;GitHub Repo
                             </a>
                         </li>
                         
