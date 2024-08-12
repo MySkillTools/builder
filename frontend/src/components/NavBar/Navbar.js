@@ -8,11 +8,11 @@ import './Navbar.scss';
 
 // SuperHeader Component
 
-const SuperHeader = () => {
-    return (
-        <div></div>
-    );
-};
+//const SuperHeader = () => {
+//    return (
+//        <div></div>
+//    );
+//};
 
 
 // Navbar Component
@@ -27,7 +27,14 @@ const Navbar = () => {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
+
+                    {/* Left Navbar */}
                     <ul className="navbar-nav me-auto">
+
+                        {/* Logo */}
+                        <li className="nav-item px-1">
+                            <img src='/images/MSB_purple.png' style={{maxHeight: '40px'}}></img>
+                        </li>
 
                         {/* Home */}
                         <li className="nav-item">
@@ -41,14 +48,19 @@ const Navbar = () => {
                         
                         {/* FAQs */}
                         <li className="nav-item">
-                            <Link className="nav-link navbar-border" to="/myEvents">FAQs</Link>
+                            <Link className="nav-link navbar-border" to="/faqs">FAQs</Link>
                         </li>
                     </ul>
                     
+                    {/* Right Navbar */}
                     <ul className="navbar-nav ms-auto">
 
+                        {/* Settings */}
+                        <li className="nav-item">
+                            <Link className="nav-link navbar-border" to="/settings">Settings</Link>
+                        </li>
+
                         {/* GitHub */}
-                        
                         <li className="nav-item">
                             <a className="nav-link navbar-border" href="https://github.com/stewebb/my-skills-builder" target="_blank">
                                 <i className="fab fa-github"></i>&nbsp;GitHub
@@ -63,4 +75,6 @@ const Navbar = () => {
 };
 
 // Export both components
-export { SuperHeader, Navbar };
+//export { SuperHeader, Navbar };
+
+export default Navbar ;

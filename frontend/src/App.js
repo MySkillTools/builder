@@ -7,6 +7,7 @@ import './styles/style.scss';
 
 // Lazy load each section
 const Home = lazy(() => import('./pages/Home/Home'));
+const Settings = lazy(() => import('./pages/Settings/Settings'));
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/Settings" element={<Settings />} />
                 </Routes>
             </Suspense>
         </Router>
