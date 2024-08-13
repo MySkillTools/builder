@@ -41,10 +41,26 @@
     }
 }
 
-.skill-desination {
-    background-color: $primary-500;
-}
+//.skill-desination {
+//    background-color: $primary-500;
+//}
 
 .skill-pool {
     background-color: var(--bs-gray-200);
 }
+
+
+.skill-pool, .skill-destination {
+    .droppable-area {
+        border: 2px dashed transparent;  // Default state has a transparent border
+        //padding: 10px;
+        //margin-bottom: 20px;
+    
+        // Style when a draggable item is over the droppable area
+        &.is-dragging-over {
+            border-color: $primary;  // Example: blue border
+            background-color: $primary-500;
+        }
+    }
+  }
+  

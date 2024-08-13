@@ -135,7 +135,7 @@ function SkillSelector() {
                                     key={skill.id}
                                     onClick={() => handleAddSkill(skill)}
                                     className="skill"
-                                    disabled={selectedSkillIds.has(skill.id)}  // Disable the button if skill has been selected
+                                    disabled={selectedSkillIds.has(skill.id)}
                                 >
                                     {skill.name}
                                 </button>
@@ -143,12 +143,22 @@ function SkillSelector() {
                         </div>
                     </div>
                     <div className="col-md-6 skill-destination py-2">
-                        <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
-                        <button className='btn btn-outline-primary' onClick={addGroup}>Add Group</button>
+                        <div className='d-flex justify-content-between'>
+                            <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
+                            <button type='button' className='btn btn-outline-primary' onClick={addGroup} >
+                                <i className="fa-solid fa-plus"></i>&nbsp;Add Group
+                            </button>
+                        </div>
+                        
+                        
                         {groups.map((group, index) => (
                             <Droppable droppableId={String(index)} key={group.id}>
-                                {(provided) => (
-                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                {(provided, snapshot) => (
+                                    <div 
+                                        ref={provided.innerRef} 
+                                        {...provided.droppableProps}
+                                        className={`droppable-area ${snapshot.isDraggingOver ? 'is-dragging-over' : ''}`}
+                                    >
                                         <h5 onClick={() => selectGroup(index)}>{group.name}</h5>
                                         <div className="cell">
                                             {group.items.map((item, index) => (
