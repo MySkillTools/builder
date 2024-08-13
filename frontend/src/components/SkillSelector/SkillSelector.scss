@@ -29,38 +29,22 @@
         }
 
         &:disabled {
-            //color: darken(#FFFFFF, 10%); // Darken the text color slightly
-            background-color: $primary-500; // Lighten the primary color for the background
-            border-color: $primary-600; // Lighten the border color
-            cursor: not-allowed; // Change the cursor to indicate the button is disabled
-            opacity: 0.65; // Reduce the opacity to make the button look faded
-            pointer-events: none; // Prevent interactions like hover
-            box-shadow: none; // Remove box shadow if any
+            color: $primary-900;
+            background-color: $primary-500;
+            border-color: $primary-600;
+            cursor: not-allowed;
+            opacity: 0.65;
+            pointer-events: none;
+            box-shadow: none;
         }
         
     }
 }
 
-//.skill-desination {
-//    background-color: $primary-500;
-//}
-
-//.skill-pool {
-//    background-color: var(--bs-gray-200);
-//}
-
-
-//.skill-pool, .skill-destination {
-    .droppable-area {
-        border: 2px dashed transparent;  // Default state has a transparent border
-        //padding: 10px;
-        //margin-bottom: 20px;
-    
-        // Style when a draggable item is over the droppable area
-        &.is-dragging-over {
-            border-color: $primary;  // Example: blue border
-            background-color: $primary-500;
-        }
+.droppable-area {
+    border: 2px dashed transparent;
+    &.is-dragging-over {
+        border-color: $primary;  // Example: blue border
+        background-color: $primary-500;
     }
-//  }
-  
+}  
