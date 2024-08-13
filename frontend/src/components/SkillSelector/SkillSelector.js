@@ -116,9 +116,9 @@ function SkillSelector() {
         setActiveGroupIndex(groups.length);
     };
 
-    const selectGroup = (index) => {
-        setActiveGroupIndex(index);
-    };
+    //const selectGroup = (index) => {
+    //    setActiveGroupIndex(index);
+    //};
 
     const removeGroup = (index) => {
         const newGroups = [...groups];
@@ -139,7 +139,10 @@ function SkillSelector() {
         <div className="skills-container container-fluid">
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="row">
-                    <div className="col-md-6 skill-pool py-2">
+                    <div className="col-md-6">
+                        <div className="card my-3">
+                        <div className="card-body">
+
                         <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
                         <div className="cell">
                             {skills.map((skill) => (
@@ -153,15 +156,22 @@ function SkillSelector() {
                                 </button>
                             ))}
                         </div>
+
+                        </div>
+                        </div>
                     </div>
-                    <div className="col-md-6 skill-destination py-2">   
+                    <div className="col-md-6">   
+
+                        <div className="card my-3">
+                        <div className="card-body">
+
                         <div className='d-flex justify-content-between'>
                             <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
                             <button type='button' className='btn btn-outline-primary' onClick={addGroup} >
                                 <i className="fa-solid fa-plus"></i>&nbsp;Add Group
                             </button>
                         </div>                       
-                         {groups.map((group, index) => (
+                        {groups.map((group, index) => (
                             <Droppable droppableId={String(index)} key={group.id}>
                                 {(provided, snapshot) => (
                                     <div 
@@ -196,6 +206,9 @@ function SkillSelector() {
                                 )}
                             </Droppable>
                         ))}
+
+                        </div>
+                        </div>
                     </div>
                 </div>
             </DragDropContext>

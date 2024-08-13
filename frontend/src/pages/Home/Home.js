@@ -32,14 +32,23 @@ function Home() {
             <Navbar />
             <div className="content">
                 <div className="container-fluid">
+
+                    <div className='my-2'>
+                        <SkillSelector skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
+                    </div>
+                    
           
                     {/* Skill Selector */}
-                    <div className="card mb-3">
+
+                    { /*
+                    <div className="card my-3">
                         <div className="card-body">
                             
-                            <SkillSelector skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
+                           
                         </div>
                     </div>
+
+    */ }
 
                             {/* Selected Skills */}
                             {/*
