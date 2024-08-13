@@ -74,7 +74,7 @@ function SkillSelector() {
                 <div className="row">
                     <Droppable droppableId="skills">
                         {(provided) => (
-                            <div className="col-md-6" ref={provided.innerRef} {...provided.droppableProps}>
+                            <div className="col-md-6 skill-pool py-2" ref={provided.innerRef} {...provided.droppableProps}>
                                 {skills.map((skill, index) => (
                                     <Draggable key={skill.id} draggableId={skill.id} index={index}>
                                         {(provided) => (
@@ -93,7 +93,7 @@ function SkillSelector() {
                     </Droppable>
                     <Droppable droppableId="selectedSkills">
                         {(provided) => (
-                            <div className="col-md-6" ref={provided.innerRef} {...provided.droppableProps}>
+                            <div className="col-md-6 skill-desination py-2" ref={provided.innerRef} {...provided.droppableProps}>
                                 {selectedSkills.map((skill, index) => (
                                     <Draggable key={skill.id} draggableId={skill.id} index={index}>
                                         {(provided) => (
