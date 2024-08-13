@@ -8,6 +8,7 @@ import './SkillSelector.scss';
  * @param {Array<Array<Array<Object>>>} skillsMatrix - The matrix of skills.
  * @param {Function} setSkillsMatrix - State setter function for the skills matrix.
  */
+
 const SkillSelector = ({ skillsMatrix, setSkillsMatrix }) => {
 
     // Function to reorder skills within the matrix when an item is dragged and dropped.
