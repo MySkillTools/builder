@@ -1,11 +1,10 @@
 @import '../../styles/variables';
 
 .cell {
-    //min-height: 50px;
-    //padding: 10px;
-    //background-color: #f4f4f4;
-    //border: 1px solid #ddd;
-    margin-bottom: 10px; // Add space between cells
+    display: flex;
+    flex-wrap: wrap; // Allow skills to wrap within the container
+    gap: 10px; // Space between skills
+    margin-bottom: 10px; // Space between rows
 
     .skill {
         user-select: none;

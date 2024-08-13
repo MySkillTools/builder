@@ -32,21 +32,14 @@ function Home() {
             <Navbar />
             <div className="content">
                 <div className="container-fluid">
-                    <div className="row">
-
-                        <div className='col-md-6 p-3'>
-
+          
+                    {/* Skill Selector */}
+                    <div className="card mb-3">
+                        <div className="card-body">
+                            
+                            <SkillSelector skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
                         </div>
-
-                        <div className='col-md-6 p-3'>
-
-                            {/* Skill Selector */}
-                            <div className="card mb-3">
-                                <div className="card-body">
-                                    <h4 className="card-title fw-bold">Skill Selector</h4>
-                                    <SkillSelector skillsMatrix={skillsMatrix} setSkillsMatrix={setSkillsMatrix} />
-                                </div>
-                            </div>
+                    </div>
 
                             {/* Selected Skills */}
                             {/*
@@ -57,9 +50,8 @@ function Home() {
                                 </div>
                             </div>
                             */}
-                            
-                        </div>  
-                    </div>
+
+                    
                 </div>
             </div>
             <Footer />
