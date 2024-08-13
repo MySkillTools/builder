@@ -49,12 +49,15 @@ function Home() {
                             </div>
 
                             {/* Selected Skills */}
+                            {/*
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title fw-bold">Selected Skills</h4>
                                     <SelectedSkills skillsMatrix={skillsMatrix} />
                                 </div>
                             </div>
+                            */}
+                            
                         </div>  
                     </div>
                 </div>
