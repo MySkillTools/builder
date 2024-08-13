@@ -56,109 +56,65 @@ function SkillSelector() {
         { id: 'skill50', name: 'SEO' },
     ]);
     const [selectedSkills, setSelectedSkills] = useState([]);
+    const [groups, setGroups] = useState([]);
+    const [activeGroupIndex, setActiveGroupIndex] = useState(null);  // null means no group is selected
 
-    const onDragEnd = (result) => {
-        const { source, destination } = result;
-    
-        if (!destination) {
-            return;
-        }
-    
-        if (source.droppableId === destination.droppableId && source.index === destination.index) {
-            return;
-        }
-    
-        const sourceList = source.droppableId === 'skills' ? skills : selectedSkills;
-        const destinationList = destination.droppableId === 'skills' ? skills : selectedSkills;
-    
-        if (source.droppableId === destination.droppableId) {
-            const items = reorder(sourceList, source.index, destination.index);
-            if (source.droppableId === 'skills') {
-                setSkills(items);
-            } else {
-                setSelectedSkills(items);
-            }
+    // Handles adding skills to either a group or the main selectedSkills list
+    const handleAddSkill = (skill) => {
+        if (activeGroupIndex !== null) {
+            const newGroups = [...groups];
+            newGroups[activeGroupIndex].items.push(skill);
+            setGroups(newGroups);
         } else {
-            const result = move(sourceList, destinationList, source.index, destination.index);
-            if (source.droppableId === 'skills') {
-                setSkills(result.source);
-                setSelectedSkills(result.destination);
-            } else {
-                setSkills(result.destination);
-                setSelectedSkills(result.source);
-            }
+            setSelectedSkills([...selectedSkills, skill]);
         }
     };
-    
-    function reorder(list, startIndex, endIndex) {
-        const result = Array.from(list);
-        const [removed] = result.splice(startIndex, 1);
-        result.splice(endIndex, 0, removed);
-        return result;
-    }
-    
-    function move(source, destination, droppableSourceIndex, droppableDestinationIndex) {
-        const sourceClone = Array.from(source);
-        const destClone = Array.from(destination);
-        const [removed] = sourceClone.splice(droppableSourceIndex, 1);
-        destClone.splice(droppableDestinationIndex, 0, removed);
-    
-        return {
-            source: sourceClone,
-            destination: destClone,
-        };
-    }
-    
+
+    // Add a new group
+    const addGroup = () => {
+        const newGroup = { id: `group-${groups.length}`, name: `Group ${groups.length + 1}`, items: [] };
+        setGroups([...groups, newGroup]);
+        setActiveGroupIndex(groups.length);  // Set the newly created group as active
+    };
+
+    // Function to select an active group
+    const selectGroup = (index) => {
+        setActiveGroupIndex(index);
+    };
+
     return (
         <div className="skills-container container-fluid">
-            <DragDropContext onDragEnd={onDragEnd}>
-                <div className="row">
-                    <Droppable droppableId="skills">
-                        {(provided) => (
-                            <div className="col-md-6 skill-pool py-2" ref={provided.innerRef} {...provided.droppableProps}>
-                                <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
-                                <div className="cell">
-                                    {skills.map((skill, index) => (
-                                        <Draggable key={skill.id} draggableId={skill.id} index={index}>
-                                            {(provided) => (
-                                                <div className="skill"
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}>
-                                                    {skill.name}
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                </div>
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId="selectedSkills">
-                        {(provided) => (
-                            <div className="col-md-6 skill-desination py-2" ref={provided.innerRef} {...provided.droppableProps}>
-                                <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
-                                <div className="cell">
-                                    {selectedSkills.map((skill, index) => (
-                                        <Draggable key={skill.id} draggableId={skill.id} index={index}>
-                                            {(provided) => (
-                                                <div className="skill"
-                                                    ref={provided.innerRef}
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}>
-                                                    {skill.name}
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                </div>
-                                {provided.placeholder}
-                            </div>
-                        )}
-                    </Droppable>
+            <div className="row">
+                <div className="col-md-6 skill-pool py-2">
+                    <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
+                    <div className="cell">
+                        {skills.map((skill) => (
+                            <button key={skill.id} onClick={() => handleAddSkill(skill)} className="skill">
+                                {skill.name}
+                            </button>
+                        ))}
+                    </div>
                 </div>
-            </DragDropContext>
+                <div className="col-md-6 skill-destination py-2">
+                    <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
+                    <button onClick={addGroup}>Add Group</button>
+                    {groups.map((group, index) => (
+                        <div key={group.id}>
+                            <h5 onClick={() => selectGroup(index)}>{group.name}</h5>
+                            <div className="cell">
+                                {group.items.map((skill) => (
+                                    <div key={skill.id} className="skill">{skill.name}</div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    <div className="cell">
+                        {selectedSkills.map((skill) => (
+                            <div key={skill.id} className="skill">{skill.name}</div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
