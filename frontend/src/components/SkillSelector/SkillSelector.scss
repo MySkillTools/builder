@@ -27,6 +27,17 @@
             box-shadow: 0 0 0 0.2rem rgba($primary, .5);
             outline: 0;
         }
+
+        &:disabled {
+            //color: darken(#FFFFFF, 10%); // Darken the text color slightly
+            background-color: $primary-500; // Lighten the primary color for the background
+            border-color: $primary-600; // Lighten the border color
+            cursor: not-allowed; // Change the cursor to indicate the button is disabled
+            opacity: 0.65; // Reduce the opacity to make the button look faded
+            pointer-events: none; // Prevent interactions like hover
+            box-shadow: none; // Remove box shadow if any
+        }
+        
     }
 }
 

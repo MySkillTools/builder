@@ -56,11 +56,35 @@ function SkillSelector() {
         { id: 'skill50', name: 'SEO' },
     ]);
     const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedSkillIds, setSelectedSkillIds] = useState(new Set());  // Set to track selected skill IDs
     const [groups, setGroups] = useState([]);
-    const [activeGroupIndex, setActiveGroupIndex] = useState(null);  // null means no group is selected
+    const [activeGroupIndex, setActiveGroupIndex] = useState(null);
 
-    // Handles adding skills to either a group or the main selectedSkills list
+    // Handles the end of a drag operation
+    const onDragEnd = (result) => {
+        const { source, destination } = result;
+        if (!destination) {
+            return;
+        }
+
+        // Moving items within the same list or between lists
+        if (source.droppableId === destination.droppableId) {
+            const items = reorder(groups[source.droppableId].items, source.index, destination.index);
+            const newGroups = [...groups];
+            newGroups[source.droppableId].items = items;
+            setGroups(newGroups);
+        } else {
+            const result = move(groups[source.droppableId].items, groups[destination.droppableId].items, source.index, destination.index);
+            const newGroups = [...groups];
+            newGroups[source.droppableId].items = result.source;
+            newGroups[destination.droppableId].items = result.destination;
+            setGroups(newGroups);
+        }
+    };
+
     const handleAddSkill = (skill) => {
+        setSelectedSkillIds(new Set(selectedSkillIds.add(skill.id)));  // Add skill ID to the set
+
         if (activeGroupIndex !== null) {
             const newGroups = [...groups];
             newGroups[activeGroupIndex].items.push(skill);
@@ -70,51 +94,86 @@ function SkillSelector() {
         }
     };
 
-    // Add a new group
+    const reorder = (list, startIndex, endIndex) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+    };
+
+    const move = (source, destination, droppableSourceIndex, droppableDestinationIndex) => {
+        const sourceClone = Array.from(source);
+        const destClone = Array.from(destination);
+        const [removed] = sourceClone.splice(droppableSourceIndex, 1);
+        destClone.splice(droppableDestinationIndex, 0, removed);
+
+        return {
+            source: sourceClone,
+            destination: destClone,
+        };
+    };
+
     const addGroup = () => {
         const newGroup = { id: `group-${groups.length}`, name: `Group ${groups.length + 1}`, items: [] };
         setGroups([...groups, newGroup]);
-        setActiveGroupIndex(groups.length);  // Set the newly created group as active
+        setActiveGroupIndex(groups.length);
     };
 
-    // Function to select an active group
     const selectGroup = (index) => {
         setActiveGroupIndex(index);
     };
 
     return (
         <div className="skills-container container-fluid">
-            <div className="row">
-                <div className="col-md-6 skill-pool py-2">
-                    <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
-                    <div className="cell">
-                        {skills.map((skill) => (
-                            <button key={skill.id} onClick={() => handleAddSkill(skill)} className="skill">
-                                {skill.name}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-                <div className="col-md-6 skill-destination py-2">
-                    <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
-                    <button onClick={addGroup}>Add Group</button>
-                    {groups.map((group, index) => (
-                        <div key={group.id}>
-                            <h5 onClick={() => selectGroup(index)}>{group.name}</h5>
-                            <div className="cell">
-                                {group.items.map((skill) => (
-                                    <div key={skill.id} className="skill">{skill.name}</div>
-                                ))}
-                            </div>
+            <DragDropContext onDragEnd={onDragEnd}>
+                <div className="row">
+                    <div className="col-md-6 skill-pool py-2">
+                        <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
+                        <div className="cell">
+                            {skills.map((skill) => (
+                                <button
+                                    key={skill.id}
+                                    onClick={() => handleAddSkill(skill)}
+                                    className="skill"
+                                    disabled={selectedSkillIds.has(skill.id)}  // Disable the button if skill has been selected
+                                >
+                                    {skill.name}
+                                </button>
+                            ))}
                         </div>
-                    ))}
-                    <div className="cell">
-                        {selectedSkills.map((skill) => (
-                            <div key={skill.id} className="skill">{skill.name}</div>
+                    </div>
+                    <div className="col-md-6 skill-destination py-2">
+                        <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
+                        <button className='btn btn-outline-primary' onClick={addGroup}>Add Group</button>
+                        {groups.map((group, index) => (
+                            <Droppable droppableId={String(index)} key={group.id}>
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                        <h5 onClick={() => selectGroup(index)}>{group.name}</h5>
+                                        <div className="cell">
+                                            {group.items.map((item, index) => (
+                                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                                    {(provided) => (
+                                                        <div
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            className="skill"
+                                                        >
+                                                            {item.name}
+                                                        </div>
+                                                    )}
+                                                </Draggable>
+                                            ))}
+                                        </div>
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
                         ))}
                     </div>
                 </div>
-            </div>
+            </DragDropContext>
         </div>
     );
 }
