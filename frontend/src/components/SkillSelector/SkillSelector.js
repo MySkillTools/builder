@@ -31,7 +31,7 @@ function SkillGroup({ group, index, onRemoveGroup }) {
                     className={`droppable-area ${snapshot.isDraggingOver ? 'is-dragging-over' : ''}`}
                 >
                     <div className="group-header d-flex justify-content-between">
-                        <h5 className='fw-bold'>{group.name} {/* (count:&nbsp;{group.items.length}) */}</h5>
+                        <span className='fw-bold'>{group.name} {/* (count:&nbsp;{group.items.length}) */}</span>
                         <button onClick={() => onRemoveGroup(index)} className="btn btn-outline-secondary btn-sm">
                             <i className="fa-solid fa-minus"></i>&nbsp;Remove
                         </button>
@@ -210,11 +210,7 @@ function SkillSelector() {
 
         
         <div className="skills-container container-fluid">
-
-            
-            <h3 className='fw-bold text-primary fraunces-font'>
-                Step 2: Customize Your Skills
-            </h3>
+            <h4 className='fw-bold text-primary fraunces-font'>Step 2: Customize Your Skills</h4>
 
             {/* Alert Message */}
             {alert && (
@@ -233,7 +229,7 @@ function SkillSelector() {
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-body">
-                                <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
+                                <h5 className="card-title fw-bold mb-3">My Skill Bank</h5>
                                 <div className="cell">
                                     {skills.map(skill => (
                                         <Skill
@@ -253,7 +249,7 @@ function SkillSelector() {
                         <div className="card">
                             <div className="card-body">
                                 <div className='d-flex justify-content-between'>
-                                    <h4 className="card-title fw-bold mb-3">Selected Skills</h4>
+                                    <h5 className="card-title fw-bold mb-3">Selected Skills</h5>
                                     <button type='button' className='btn btn-outline-primary' onClick={addGroup}>
                                         <i className="fa-solid fa-plus"></i>&nbsp;Add Group
                                     </button>

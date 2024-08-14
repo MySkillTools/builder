@@ -1,1 +1,7 @@
-// TODO
+.customized-link {
+    a {
+        &:hover {
+            background-color: lightgreen;
+        }
+    }
+}
