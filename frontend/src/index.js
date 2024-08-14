@@ -30,7 +30,3 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <App />
 );
-
-// Performance and diagnostics (commented out, optional)
-// import reportWebVitals from './reportWebVitals';
-// reportWebVitals(console.log);
