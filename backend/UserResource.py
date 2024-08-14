@@ -1,5 +1,6 @@
 from flask_restful import Resource
-from . import user
+import user
+#from datetime import datetime
 
 class UserResource(Resource):
     def get(self):
@@ -9,7 +10,7 @@ class UserResource(Resource):
         
         response = {
             'user_id': user_id,
-            'expires_at': expiration_date.isoformat()  # ISO format for easier readability
+            'cookie_expires': expiration_date.strftime('%Y-%m-%d %H:%M:%S')
         }
 
         return response, 200

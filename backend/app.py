@@ -1,5 +1,7 @@
 from flask import Flask, g, send_from_directory
+from flask_restful import Api
 import user
+import UserResource
 
 def create_app():
     app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -33,6 +35,9 @@ def create_app():
     return app
 
 app = create_app()
+api = Api(app)
+
+api.add_resource(UserResource.UserResource, '/api/user')
 
 if __name__ == '__main__':
     app.run(debug=True)
