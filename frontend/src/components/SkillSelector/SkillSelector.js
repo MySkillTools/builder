@@ -32,7 +32,7 @@ function SkillGroup({ group, index, onRemoveGroup }) {
                 >
                     <div className="group-header d-flex justify-content-between">
                         <h5 className='fw-bold'>{group.name} (count:&nbsp;{group.items.length})</h5>
-                        <button onClick={() => onRemoveGroup(index)} className="btn btn-outline-danger btn-sm">
+                        <button onClick={() => onRemoveGroup(index)} className="btn btn-outline-secondary btn-sm">
                             <i className="fa-solid fa-minus"></i>&nbsp;Remove
                         </button>
                     </div>
@@ -59,6 +59,26 @@ function SkillGroup({ group, index, onRemoveGroup }) {
     );
 }
 
+function SkillTrash() {
+    return (
+        <Droppable droppableId="bin" isDropDisabled={false}>
+            {(provided, snapshot) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className={`d-flex justify-content-center fw-bold drop-bin ${snapshot.isDraggingOver ? 'is-dragging-over' : ''}`}
+                >
+                    <div className='my-1'>
+                        <i className='fa fa-trash'></i> &nbsp;Remove a skill
+                    </div>
+                    
+                    {provided.placeholder}
+                   </div>
+            )}
+        </Droppable>
+    );
+}
+
 function SkillSelector() {
     // State to store all skills available
     //const [skills, setSkills] = useState([
@@ -69,7 +89,7 @@ function SkillSelector() {
     //const [skillsState, setSkillsState] = useState(skills);
 
     // State to track selected skills
-    const [selectedSkills, setSelectedSkills] = useState([]);
+    //const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedSkillIds, setSelectedSkillIds] = useState(new Set()); // Set to track selected skill IDs
 
     // State to manage groups of skills
@@ -82,9 +102,38 @@ function SkillSelector() {
     // Function to handle the end of a drag operation
     const onDragEnd = (result) => {
         const { source, destination } = result;
+        
         if (!destination) return;
 
-        if (source.droppableId === destination.droppableId) {
+        console.log(source.droppableId);
+    
+        if (destination.droppableId === "bin") {
+
+            console.log("444444444444444");
+
+            // Remove skill from the group and add to the skill bank
+            const removedSkill = groups[source.index].items[source.index];
+            const newGroups = [...groups];
+            newGroups[source.droppableId].items = newGroups[source.droppableId].items.filter(
+                item => item.id !== removedSkill.id
+            );
+            setGroups(newGroups);
+    
+            // Add skill to the skill bank
+            //setSelectedSkillIds(prev => new Set(prev.add(removedSkill.id)));
+
+            //console.log(removedSkill.id)
+
+            const newSelectedSkillIds = new Set(selectedSkillIds);
+            //removedGroup.items.forEach(skill => newSelectedSkillIds.delete(skill.id));
+            newSelectedSkillIds.delete(removedSkill.id)
+            setSelectedSkillIds(newSelectedSkillIds);
+            
+            //const newSelectedSkillIds = new Set(selectedSkillIds);
+            //removedGroup.items.forEach(skill => newSelectedSkillIds.delete(skill.id));
+            //setSelectedSkillIds(newSelectedSkillIds);
+
+        } else if (source.droppableId === destination.droppableId) {
             // Reorder within the same group
             const items = reorder(groups[source.droppableId].items, source.index, destination.index);
             const newGroups = [...groups];
@@ -99,6 +148,7 @@ function SkillSelector() {
             setGroups(newGroups);
         }
     };
+    
 
     // Utility function to reorder skills within a group
     const reorder = (list, startIndex, endIndex) => {
@@ -183,7 +233,8 @@ function SkillSelector() {
         
         <div className="skills-container container-fluid">
 
-        {alert && (
+            {/* Alert Message */}
+            {alert && (
                 <AlertMessage
                 type={alert.type}
                 message={alert.message}
@@ -213,6 +264,8 @@ function SkillSelector() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Selected Skills */}
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-body">
@@ -222,9 +275,16 @@ function SkillSelector() {
                                         <i className="fa-solid fa-plus"></i>&nbsp;Add Group
                                     </button>
                                 </div>
+                                <div className='my-2'>
                                 {groups.map((group, index) => (
                                     <SkillGroup group={group} index={index} onRemoveGroup={removeGroup} />
                                 ))}
+                                </div>
+                                
+                                <div>
+                                    <SkillTrash />
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
