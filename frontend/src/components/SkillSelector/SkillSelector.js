@@ -31,7 +31,7 @@ function SkillGroup({ group, index, onRemoveGroup }) {
                     className={`droppable-area ${snapshot.isDraggingOver ? 'is-dragging-over' : ''}`}
                 >
                     <div className="group-header d-flex justify-content-between">
-                        <h5 className='fw-bold'>{group.name} (count:&nbsp;{group.items.length})</h5>
+                        <h5 className='fw-bold'>{group.name} {/* (count:&nbsp;{group.items.length}) */}</h5>
                         <button onClick={() => onRemoveGroup(index)} className="btn btn-outline-secondary btn-sm">
                             <i className="fa-solid fa-minus"></i>&nbsp;Remove
                         </button>
@@ -80,20 +80,11 @@ function SkillTrash() {
 }
 
 function SkillSelector() {
-    // State to store all skills available
-    //const [skills, setSkills] = useState([
-    //  { id: 'skill1', name: 'HTML' }, { id: 'skill2', name: 'CSS' },
-    // Add all other skills here...
-    //   { id: 'skill50', name: 'SEO' },
-    //]);
-    //const [skillsState, setSkillsState] = useState(skills);
 
-    // State to track selected skills
-    //const [selectedSkills, setSelectedSkills] = useState([]);
+    // Track selected skills
     const [selectedSkillIds, setSelectedSkillIds] = useState(new Set()); // Set to track selected skill IDs
 
-    // State to manage groups of skills
-    // groups is an array of skill objects
+    // Groups of skills (an array of skill objects)
     const [groups, setGroups] = useState([]);
     const [activeGroupIndex, setActiveGroupIndex] = useState(null);
 
@@ -103,18 +94,13 @@ function SkillSelector() {
     const onDragEnd = (result) => {
         const { source, destination } = result;
         
+        // Case 0: Drag to a unsupported area. Do nothing.
         if (!destination) return;
 
-        console.log(source.droppableId);
-    
+        // Case 1: Drag a skill into trash bin
         if (destination.droppableId === "bin") {
 
-            //console.log(source.index);
-            //console.log(groups);
-
-            //console.log(source)
-
-            // Remove skill from the group and add to the skill bank
+            // Remove it from the selected skills group
             const removedSkill = groups[source.droppableId].items[source.index];
             const newGroups = [...groups];
             newGroups[source.droppableId].items = newGroups[source.droppableId].items.filter(
@@ -122,28 +108,22 @@ function SkillSelector() {
             );
             setGroups(newGroups);
     
-            // Add skill to the skill bank
-            //setSelectedSkillIds(prev => new Set(prev.add(removedSkill.id)));
-
-            //console.log(removedSkill.id)
-
+            // Enable it again in the skill bank
             const newSelectedSkillIds = new Set(selectedSkillIds);
-            //removedGroup.items.forEach(skill => newSelectedSkillIds.delete(skill.id));
             newSelectedSkillIds.delete(removedSkill.id)
             setSelectedSkillIds(newSelectedSkillIds);
-            
-            //const newSelectedSkillIds = new Set(selectedSkillIds);
-            //removedGroup.items.forEach(skill => newSelectedSkillIds.delete(skill.id));
-            //setSelectedSkillIds(newSelectedSkillIds);
-
-        } else if (source.droppableId === destination.droppableId) {
-            // Reorder within the same group
+        } 
+        
+        // Case 2: Reorder within the same group
+        else if (source.droppableId === destination.droppableId) {
             const items = reorder(groups[source.droppableId].items, source.index, destination.index);
             const newGroups = [...groups];
             newGroups[source.droppableId].items = items;
             setGroups(newGroups);
-        } else {
-            // Move between different groups
+        } 
+
+        // Case 3: Move between different groups
+        else {
             const result = move(groups[source.droppableId].items, groups[destination.droppableId].items, source.index, destination.index);
             const newGroups = [...groups];
             newGroups[source.droppableId].items = result.source;
@@ -205,12 +185,6 @@ function SkillSelector() {
         
         // Otherwise, display an alert box
         else {
-            // If no active group, add the skill to the list of selected skills
-            //setSelectedSkills([...selectedSkills, skill]);
-
-            // TODO: USE MY ALER BOX
-            //alert("Please select at least 1 group!");
-
             setAlert({
                 type: 'warning',
                 message: 'Please add at least 1 group!',
@@ -218,6 +192,7 @@ function SkillSelector() {
             });
         }
     };
+    
     // Function to handle removing a group
     const removeGroup = (index) => {
         const newGroups = [...groups];
@@ -235,6 +210,11 @@ function SkillSelector() {
 
         
         <div className="skills-container container-fluid">
+
+            
+            <h3 className='fw-bold text-primary fraunces-font'>
+                Step 2: Customize Your Skills
+            </h3>
 
             {/* Alert Message */}
             {alert && (
