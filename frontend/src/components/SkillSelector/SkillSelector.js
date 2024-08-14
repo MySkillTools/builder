@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+import AlertMessage from '../AlertMessage/AlertMessage';
+
 import './SkillSelector.scss';
 import { skills } from './skillsData';  // Import the skills array
 
@@ -70,8 +73,11 @@ function SkillSelector() {
     const [selectedSkillIds, setSelectedSkillIds] = useState(new Set()); // Set to track selected skill IDs
 
     // State to manage groups of skills
+    // groups is an array of skill objects
     const [groups, setGroups] = useState([]);
     const [activeGroupIndex, setActiveGroupIndex] = useState(null);
+
+    const [alert, setAlert] = useState(null);
 
     // Function to handle the end of a drag operation
     const onDragEnd = (result) => {
@@ -125,10 +131,15 @@ function SkillSelector() {
     // Function to handle adding a skill to a group or selected list
     const handleAddSkill = (skill) => {
         // Add the skill ID to the set of selected skill IDs
-        setSelectedSkillIds(new Set(selectedSkillIds.add(skill.id)));
+        // setSelectedSkillIds(new Set(selectedSkillIds.add(skill.id)));
+
+        //console.log(activeGroupIndex);
     
-        // Check if a group is currently active
+        // Check if at least one group is selected.
         if (activeGroupIndex !== null) {
+
+            setSelectedSkillIds(new Set(selectedSkillIds.add(skill.id)));
+
             // Create a new array of groups to avoid mutating the existing state directly
             const newGroups = [...groups];
             
@@ -137,9 +148,21 @@ function SkillSelector() {
             
             // Update the state with the new groups array
             setGroups(newGroups);
-        } else {
+        } 
+        
+        // Otherwise, display an alert box
+        else {
             // If no active group, add the skill to the list of selected skills
-            setSelectedSkills([...selectedSkills, skill]);
+            //setSelectedSkills([...selectedSkills, skill]);
+
+            // TODO: USE MY ALER BOX
+            //alert("Please select at least 1 group!");
+
+            setAlert({
+                type: 'warning',
+                message: 'Please add at least 1 group!',
+                timer: 2500 // Optional: Dismiss after 5 seconds
+            });
         }
     };
     // Function to handle removing a group
@@ -156,13 +179,25 @@ function SkillSelector() {
     };
 
     return (
+
+        
         <div className="skills-container container-fluid">
+
+        {alert && (
+                <AlertMessage
+                type={alert.type}
+                message={alert.message}
+                timer={alert.timer}
+                onClose={() => setAlert(null)}
+                />
+            )}
+
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="row">
 
                     {/* My Skill Bank */}
                     <div className="col-md-6">
-                        <div className="card my-3">
+                        <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title fw-bold mb-3">My Skill Bank</h4>
                                 <div className="cell">
@@ -179,7 +214,7 @@ function SkillSelector() {
                         </div>
                     </div>
                     <div className="col-md-6">
-                        <div className="card my-3">
+                        <div className="card">
                             <div className="card-body">
                                 <div className='d-flex justify-content-between'>
                                     <h4 className="card-title fw-bold mb-3">Selected Skills</h4>

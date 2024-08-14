@@ -11,8 +11,12 @@ function Home() {
             <div className="content">
                 <div className="container-fluid">
 
-                    <div className='my-2'>
+                    <div className='my-3'>
                         <SkillSelector />
+                    </div>
+
+                    <div>
+                        HELLO
                     </div>
                     
                 </div>
