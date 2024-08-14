@@ -132,3 +132,6 @@ dist
 # build
 # production
 /build
+
+# pyc
+*.pyc
