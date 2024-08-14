@@ -109,10 +109,13 @@ function SkillSelector() {
     
         if (destination.droppableId === "bin") {
 
-            console.log("444444444444444");
+            //console.log(source.index);
+            //console.log(groups);
+
+            //console.log(source)
 
             // Remove skill from the group and add to the skill bank
-            const removedSkill = groups[source.index].items[source.index];
+            const removedSkill = groups[source.droppableId].items[source.index];
             const newGroups = [...groups];
             newGroups[source.droppableId].items = newGroups[source.droppableId].items.filter(
                 item => item.id !== removedSkill.id
