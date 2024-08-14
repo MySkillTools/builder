@@ -13,7 +13,10 @@ function Home() {
                 <div className="container-fluid">
 
                     <div className='my-3'>
+
+                        { /*
                         <BuildSkillBank />
+                        */ }
                         <SkillSelector />
                     </div>
 

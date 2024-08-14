@@ -8,7 +8,9 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import './styles/style.scss';
 
 // Lazy loaded components
+const About = lazy(() => import('./pages/About/About'));
 const Home = lazy(() => import('./pages/Home/Home'));
+const MySkillBank = lazy(() => import('./pages/MySkillBank/MySkillBank'));
 const Settings = lazy(() => import('./pages/Settings/Settings'));
 
 // App component with routing
@@ -17,7 +19,9 @@ function App() {
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
+                    <Route path="/about" element={<About />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/mySkillBank" element={<MySkillBank />} />
                     <Route path="/settings" element={<Settings />} />
                 </Routes>
             </Suspense>

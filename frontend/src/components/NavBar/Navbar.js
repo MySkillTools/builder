@@ -26,27 +26,35 @@ const Navbar = () => {
 
                         {/* Home */}
                         <li className="nav-item">
-                            <Link className={`nav-link navbar-border ${currentPath === '/' ? 'active' : ''}`} to="/">Home</Link>
+                            <Link className={`nav-link navbar-border ${currentPath === '/' ? 'active' : ''}`} to="/">
+                                <i class="fa-solid fa-house"></i>&nbsp;Home
+                            </Link>
                         </li>
                         
+                        {/* My Skill Bank */}
+                        <li className="nav-item">
+                            <Link className={`nav-link navbar-border ${currentPath === '/mySkillBank' ? 'active' : ''}`} to="/mySkillBank">
+                                <i class="fa-solid fa-database"></i>&nbsp;My Skill Bank
+                            </Link>
+                        </li>
+
+                        {/* Settings */}
+                        <li className="nav-item">
+                            <Link className={`nav-link navbar-border ${currentPath === '/settings' ? 'active' : ''}`} to="/settings">
+                                <i class="fa-solid fa-gear"></i>&nbsp;Settings
+                            </Link>
+                        </li>
+
                         {/* About */}
                         <li className="nav-item">
-                            <Link className={`nav-link navbar-border ${currentPath === '/about' ? 'active' : ''}`} to="/about">About</Link>
-                        </li>
-                        
-                        {/* FAQs */}
-                        <li className="nav-item">
-                            <Link className={`nav-link navbar-border ${currentPath === '/faqs' ? 'active' : ''}`} to="/faqs">FAQs</Link>
+                            <Link className={`nav-link navbar-border ${currentPath === '/about' ? 'active' : ''}`} to="/about">
+                                <i class="fa-solid fa-circle-question"></i>&nbsp;About
+                            </Link>
                         </li>
                     </ul>
                     
                     {/* Right Navbar */}
                     <ul className="navbar-nav ms-auto">
-
-                        {/* Settings */}
-                        <li className="nav-item">
-                            <Link className={`nav-link navbar-border ${currentPath === '/settings' ? 'active' : ''}`} to="/settings">Settings</Link>
-                        </li>
 
                         {/* GitHub */}
                         <li className="nav-item">
