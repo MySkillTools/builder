@@ -5,7 +5,6 @@
 }
 
 body { 
-    //padding-top: 100px;
     font-family: sans-serif;
     background-color: #f4f6f9;
     font-family: var(--font-family-sans-serif);
@@ -43,3 +42,15 @@ html, body {
 .fraunces-font {
     font-family: 'Fraunces';
 }
+
+
+::selection {
+    background-color: $primary;
+    color: #fff;
+}
+  
+  ::-moz-selection {
+    background-color: $primary;
+    color: #fff;
+}
+  
