@@ -25,6 +25,7 @@ def create_app():
 
     @app.route('/')
     def home():
+        print("home")
         return send_from_directory(app.static_folder, 'index.html')
 
     # Catch-all for serving React app for all other routes
