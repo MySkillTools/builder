@@ -227,16 +227,24 @@ function SkillSelector() {
 
                     {/* My Skill Bank */}
                     <div className="col-md-6 mb-3">
-                        <h4 className='fw-bold text-primary fraunces-font'>Step 1: Set-up Your Skill Bank</h4>
                         <div className="card">
+                            <div className='card-header custom-card-header d-flex justify-content-between'>
+                                <h5 className='mb-0'>Step 1: Set-up Your Skill Bank</h5>
+                                <Link to="/mySkillBank" className="btn btn-outline-primary btn-sm">
+                                    <i className="fa-solid fa-screwdriver-wrench"></i>&nbsp;Customize
+                                </Link>
+                            </div>
                             <div className="card-body">
+
+                                {/*
                                 <div className='d-flex justify-content-between'>
                                     <h5 className="card-title fw-bold mb-3">My Skill Bank</h5>
                                     <Link to="/mySkillBank" className="btn btn-outline-primary">
                                         <i className="fa-solid fa-screwdriver-wrench"></i>&nbsp;Customize
                                     </Link>
-
                                 </div>
+                                */}
+
                                 <div className="cell my-2">
                                     {skills.map(skill => (
                                         <Skill
@@ -253,15 +261,25 @@ function SkillSelector() {
 
                     {/* Selected Skills */}
                     <div className="col-md-6 mb-3">
-                        <h4 className='fw-bold text-primary fraunces-font'>Step 2: Select Your Skills</h4>
                         <div className="card">
+
+                            <div className='card-header custom-card-header d-flex align-items-center justify-content-between'>
+                                <h5 className='mb-0'>Step 2: Select Your Skills</h5>
+                                <button type='button' className='btn btn-outline-primary btn-sm' onClick={addGroup}>
+                                    <i className="fa-solid fa-plus"></i>&nbsp;Add Group
+                                </button>
+                            </div>
                             <div className="card-body">
+
+                                {/*
                                 <div className='d-flex justify-content-between'>
                                     <h5 className="card-title fw-bold">Selected Skills</h5>
                                     <button type='button' className='btn btn-outline-primary' onClick={addGroup}>
                                         <i className="fa-solid fa-plus"></i>&nbsp;Add Group
                                     </button>
                                 </div>
+                                */}
+
                                 <div className='my-2'>
                                     {groups.map((group, index) => (
                                         <SkillGroup group={group} index={index} onRemoveGroup={removeGroup} />

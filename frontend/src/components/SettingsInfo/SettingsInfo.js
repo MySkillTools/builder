@@ -1,5 +1,9 @@
 import React from 'react';
+
+//import Tooltip from '../Tooltip/Tooltip';
+
 import useUserData from '../../hooks/useUserData';
+import { Tooltip } from 'react-tooltip'
 
 function UserInfo() {
     const { user, loading, error } = useUserData();
@@ -17,7 +21,7 @@ function UserInfo() {
                 {/* Display user data or a message if no user data is available */}
                 {!loading && !error && (
                     user ? (
-                        <table className="table">
+                        <table className="table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Attribute</th>
@@ -26,11 +30,21 @@ function UserInfo() {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>User ID</td>
+                                    <td>
+                                        <a data-tooltip-id="user-id" data-tooltip-content={`A unique and random user identifier, which will be generated when you first visit this site. It is valid for ${user.cookie_lifespan} days.`}>
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </a>
+                                        &nbsp;User ID
+                                    </td>
                                     <td>{user.user_id}</td>
                                 </tr>
                                 <tr>
-                                    <td>Cookie Expires</td>
+                                    <td>
+                                        <a data-tooltip-id="cookie-expires" data-tooltip-content="Your user session will be invalid after this time. But the expiration date can be renewed when you visit this site before your session expires.">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </a>
+                                        &nbsp;Cookie Expires
+                                    </td>
                                     <td>{user.cookie_expires}</td>
                                 </tr>
                                 {/* Add more rows as needed */}
@@ -41,6 +55,10 @@ function UserInfo() {
                     )
                 )}
             </div>
+            
+            <Tooltip id="user-id" />
+            <Tooltip id="cookie-expires" />
+
         </div>
     );
 }

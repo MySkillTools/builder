@@ -11,7 +11,8 @@ class UserResource(Resource):
         
         response = {
             'user_id': user_id,
-            'cookie_expires': expiration_date.strftime('%Y-%m-%d %H:%M:%S')
+            'cookie_expires': expiration_date.strftime('%Y-%m-%d %H:%M:%S'),
+            'cookie_lifespan' : config.COOKIE_LIFESPAN
         }
 
         return response, 200
