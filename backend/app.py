@@ -37,12 +37,13 @@ def create_app():
 
     return app
 
-app = create_app()
-CORS(app, supports_credentials=True)
 
-api = Api(app)
-
-api.add_resource(UserResource.UserResource, '/user')
 
 if __name__ == '__main__':
+    app = create_app()
+    #CORS(app, supports_credentials=True)
+
+    api = Api(app)
+
+    api.add_resource(UserResource.UserResource, '/user')
     app.run(debug=True)

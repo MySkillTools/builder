@@ -72,9 +72,9 @@ function SkillTrash() {
                     <div className='my-1'>
                         <i className='fa fa-trash'></i> &nbsp;Remove a skill
                     </div>
-                    
+
                     {provided.placeholder}
-                   </div>
+                </div>
             )}
         </Droppable>
     );
@@ -94,7 +94,7 @@ function SkillSelector() {
     // Function to handle the end of a drag operation
     const onDragEnd = (result) => {
         const { source, destination } = result;
-        
+
         // Case 0: Drag to a unsupported area. Do nothing.
         if (!destination) return;
 
@@ -108,20 +108,20 @@ function SkillSelector() {
                 item => item.id !== removedSkill.id
             );
             setGroups(newGroups);
-    
+
             // Enable it again in the skill bank
             const newSelectedSkillIds = new Set(selectedSkillIds);
             newSelectedSkillIds.delete(removedSkill.id)
             setSelectedSkillIds(newSelectedSkillIds);
-        } 
-        
+        }
+
         // Case 2: Reorder within the same group
         else if (source.droppableId === destination.droppableId) {
             const items = reorder(groups[source.droppableId].items, source.index, destination.index);
             const newGroups = [...groups];
             newGroups[source.droppableId].items = items;
             setGroups(newGroups);
-        } 
+        }
 
         // Case 3: Move between different groups
         else {
@@ -132,7 +132,7 @@ function SkillSelector() {
             setGroups(newGroups);
         }
     };
-    
+
 
     // Utility function to reorder skills within a group
     const reorder = (list, startIndex, endIndex) => {
@@ -168,7 +168,7 @@ function SkillSelector() {
         // setSelectedSkillIds(new Set(selectedSkillIds.add(skill.id)));
 
         //console.log(activeGroupIndex);
-    
+
         // Check if at least one group is selected.
         if (activeGroupIndex !== null) {
 
@@ -176,14 +176,14 @@ function SkillSelector() {
 
             // Create a new array of groups to avoid mutating the existing state directly
             const newGroups = [...groups];
-            
+
             // Add the skill to the items of the active group
             newGroups[activeGroupIndex].items.push(skill);
-            
+
             // Update the state with the new groups array
             setGroups(newGroups);
-        } 
-        
+        }
+
         // Otherwise, display an alert box
         else {
             setAlert({
@@ -193,7 +193,7 @@ function SkillSelector() {
             });
         }
     };
-    
+
     // Function to handle removing a group
     const removeGroup = (index) => {
         const newGroups = [...groups];
@@ -209,16 +209,16 @@ function SkillSelector() {
 
     return (
 
-        
+
         <div className="skills-container container-fluid">
 
             {/* Alert Message */}
             {alert && (
                 <AlertMessage
-                type={alert.type}
-                message={alert.message}
-                timer={alert.timer}
-                onClose={() => setAlert(null)}
+                    type={alert.type}
+                    message={alert.message}
+                    timer={alert.timer}
+                    onClose={() => setAlert(null)}
                 />
             )}
 
@@ -267,11 +267,11 @@ function SkillSelector() {
                                         <SkillGroup group={group} index={index} onRemoveGroup={removeGroup} />
                                     ))}
                                 </div>
-                                
+
                                 <div>
                                     <SkillTrash />
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>

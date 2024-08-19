@@ -8,18 +8,18 @@ const port = 8080;
 app.use('/', createProxyMiddleware({
     target: 'http://localhost:3000',
     changeOrigin: true,
-    pathRewrite: {
-        '^/': '/', // Rewrite URL path (you may adjust based on your needs)
-    },
+    //pathRewrite: {
+    //    '^/': '/', // Rewrite URL path (you may adjust based on your needs)
+    //},
 }));
 
 // Proxy requests from /api to localhost:5000/api
 app.use('/api', createProxyMiddleware({
     target: 'http://localhost:5000/api',
     changeOrigin: true,
-    pathRewrite: {
-        '^/': '/', // Rewrite URL path (you may adjust based on your needs)
-    },
+    //pathRewrite: {
+    //    '^/': '/', // Rewrite URL path (you may adjust based on your needs)
+    //},
 }));
 
 app.listen(port, () => {
