@@ -80,6 +80,53 @@ function SkillTrash() {
     );
 }
 
+// Functional component to render the table
+const SkillTable = ({ data }) => {
+    if (!Array.isArray(data)) {
+        // Handle cases where data is not an array
+        return <p>Error: Data should be an array.</p>;
+    }
+    
+    return (
+        <table border="1" cellPadding="10">
+            <thead>
+                <tr>
+                    <th>Group ID</th>
+                    <th>Group Name</th>
+                    <th>Item Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {data.map(group => (
+                    <React.Fragment key={group.id}>
+                        {group.items.length > 0 ? (
+                            <>
+                                {group.items.map((item, index) => (
+                                    <tr key={item.id}>
+                                        {index === 0 && (
+                                            <>
+                                                <td rowSpan={group.items.length}>{group.id}</td>
+                                                <td rowSpan={group.items.length}>{group.name}</td>
+                                            </>
+                                        )}
+                                        <td>{item.name}</td>
+                                    </tr>
+                                ))}
+                            </>
+                        ) : (
+                            <tr>
+                                <td>{group.id}</td>
+                                <td>{group.name}</td>
+                                <td>No items</td>
+                            </tr>
+                        )}
+                    </React.Fragment>
+                ))}
+            </tbody>
+        </table>
+    );
+};
+
 function SkillSelector() {
 
     // Track selected skills
@@ -94,6 +141,8 @@ function SkillSelector() {
     // Function to handle the end of a drag operation
     const onDragEnd = (result) => {
         const { source, destination } = result;
+
+        //console.log(groups);
 
         // Case 0: Drag to a unsupported area. Do nothing.
         if (!destination) return;
@@ -212,28 +261,20 @@ function SkillSelector() {
 
         <div className="skills-container container-fluid">
 
-            {/* Alert Message */}
-            {alert && (
-                <AlertMessage
-                    type={alert.type}
-                    message={alert.message}
-                    timer={alert.timer}
-                    onClose={() => setAlert(null)}
-                />
-            )}
-
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="row">
 
                     {/* My Skill Bank */}
                     <div className="col-md-6 mb-3">
                         <div className="card">
-                            <div className='card-header custom-card-header d-flex justify-content-between'>
-                                <h5 className='mb-0'>Step 1: Set-up Your Skill Bank</h5>
+
+                            <div className='card-header custom-card-header d-flex align-items-center justify-content-between'>
+                                <h5 className='mb-0'>1.&nbsp;Set-up Your Skill Bank</h5>
                                 <Link to="/mySkillBank" className="btn btn-outline-primary btn-sm">
                                     <i className="fa-solid fa-screwdriver-wrench"></i>&nbsp;Customize
                                 </Link>
                             </div>
+
                             <div className="card-body">
 
                                 {/*
@@ -264,7 +305,7 @@ function SkillSelector() {
                         <div className="card">
 
                             <div className='card-header custom-card-header d-flex align-items-center justify-content-between'>
-                                <h5 className='mb-0'>Step 2: Select Your Skills</h5>
+                                <h5 className='mb-0'>2.&nbsp;Select Your Skills</h5>
                                 <button type='button' className='btn btn-outline-primary btn-sm' onClick={addGroup}>
                                     <i className="fa-solid fa-plus"></i>&nbsp;Add Group
                                 </button>
@@ -280,6 +321,17 @@ function SkillSelector() {
                                 </div>
                                 */}
 
+                                {/* Alert Message */}
+
+                                {alert && (
+                                    <AlertMessage
+                                        type={alert.type}
+                                        message={alert.message}
+                                        timer={alert.timer}
+                                        onClose={() => setAlert(null)}
+                                    />
+                                )}
+
                                 <div className='my-2'>
                                     {groups.map((group, index) => (
                                         <SkillGroup group={group} index={index} onRemoveGroup={removeGroup} />
@@ -293,6 +345,33 @@ function SkillSelector() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Re-style Results */}
+                    <div className="col-md-6 mb-3">
+                        <div className="card">
+
+                            <div className='card-header custom-card-header'>
+                                <h5 className='mb-0'>3.&nbsp;Re-style Results (Optional)</h5>
+                            </div>
+                            <div className="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Preview */}
+                    <div className="col-md-6 mb-3">
+                        <div className="card">
+
+                            <div className='card-header custom-card-header'>
+                                <h5 className='mb-0'>Preview</h5>
+                            </div>
+                            <div className="card-body">
+                                <SkillTable data={groups} />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </DragDropContext>
         </div>
