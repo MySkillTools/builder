@@ -6,6 +6,12 @@ import BuildSkillBank from '../../components/BuildSkillBank/BuildSkillBank';
 import SkillSelector from '../../components/SkillSelector/SkillSelector';
 
 function Home() {
+
+fetch('/api/user')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
     return (
         <div id="app">
             <Navbar />
