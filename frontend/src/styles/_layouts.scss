@@ -54,3 +54,10 @@ html, body {
     color: #fff;
 }
   
+.custom-card-header {
+    background-color: #ffffff;
+    color: $primary;
+    font-weight: bold;
+    font-family: 'Fraunces', serif;
+    //padding: 10px; /* Optional padding to enhance appearance */
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer';
 
-import useUserData from '../../hooks/useUserData';
+import SettingsInfo from '../../components/SettingsInfo/SettingsInfo';
 
 function Settings() {
 
@@ -12,7 +12,7 @@ function Settings() {
         <div id="app">
 
             <Navbar />
-           
+                <SettingsInfo />
             <Footer />
         </div>
     );
