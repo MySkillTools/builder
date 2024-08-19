@@ -2,24 +2,18 @@ const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
-const port = 8080;
+const port = 8000;
 
-// Proxy requests from / to localhost:3000
+// Proxy requests from the frontend to localhost:3000
 app.use('/', createProxyMiddleware({
     target: 'http://localhost:3000',
     changeOrigin: true,
-    //pathRewrite: {
-    //    '^/': '/', // Rewrite URL path (you may adjust based on your needs)
-    //},
 }));
 
-// Proxy requests from /api to localhost:5000/api
+// Proxy requests from the api backend to localhost:5000
 app.use('/api', createProxyMiddleware({
-    target: 'http://localhost:5000/api',
+    target: 'http://localhost:5000/',
     changeOrigin: true,
-    //pathRewrite: {
-    //    '^/': '/', // Rewrite URL path (you may adjust based on your needs)
-    //},
 }));
 
 app.listen(port, () => {

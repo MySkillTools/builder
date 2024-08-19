@@ -131,7 +131,7 @@ dist
 
 # build
 # production
-/build
+**/build
 
-# pyc
+# Python caches
 *.pyc
