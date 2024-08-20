@@ -4,18 +4,24 @@
 DEV_MODE=false
 MSG_WIDTH=80
 PID_FILE="pids.txt"
-#STARTUP_MSG=""
+
+# Text color and attributes
+EQUALS="========"
+BOLD='\033[1m'
+RED='\033[31m'
+GREEN='\033[32m'
+YELLOW='\033[33m'
+BLUE='\033[34m'
+RESET='\033[0m'
 
 # Get running mode from commend line (dev or prod)
 while [ "$1" != "" ]; do
     case $1 in
         --dev | -d)
             DEV_MODE=true
-            #STARTUP_MSG="MSB Development Mode"
             ;;
         *)
             DEV_MODE=false
-            #STARTUP_MSG="MSB Production Mode"
             ;;
     esac
     shift
@@ -26,19 +32,6 @@ if [ "$DEV_MODE" = true ]; then
 else
     STARTUP_MSG="MSB Production Mode"
 fi
-#echo "STARTUP_MSG: $STARTUP_MSG"
-
-#MSG_PADDING=$(((WIDTH - ${#STARTUP_MSG} - 2) / 2 ))
-
-#echo $STARTUP_MSG
-
-# Define color codes
-BOLD='\033[1m'
-RED='\033[31m'
-GREEN='\033[32m'
-YELLOW='\033[33m'
-BLUE='\033[34m'
-RESET='\033[0m'
 
 # Display startup message with a box
 display_startup_message() {
@@ -52,18 +45,12 @@ display_startup_message() {
     local right_padding=$(((total_padding) / 2))
 
     # Create the box
-    echo "${BLUE}+$(printf '%*s' $width | tr ' ' '=')+"
+    echo "${BOLD}${BLUE}+$(printf '%*s' $width | tr ' ' '=')+"
     echo "|$(printf '%*s' $left_padding)${message}$(printf '%*s' $right_padding)|"
     echo "+$(printf '%*s' $width | tr ' ' '=')+"
     echo "${RESET}\n"
 }
-display_startup_message "$STARTUP_MSG" $MSG_WIDTH
-
-# Display dev mode
-#echo "+$(printf '%*s' $MSG_WIDTH | tr ' ' '=')+"
-#echo "|$(printf '%*s' $MSG_PADDING)${STARTUP_MSG}$(printf '%*s' $MSG_PADDING)|"
-#echo "+$(printf '%*s' $MSG_WIDTH | tr ' ' '=')+"
-#echo "\n"
+display_startup_message "STARTING: $STARTUP_MSG" $MSG_WIDTH
 
 # Store PIDs
 ABS_PID_FILE=$(realpath "$PID_FILE")
@@ -71,15 +58,22 @@ ABS_PID_FILE=$(realpath "$PID_FILE")
 
 # Clean up background processes
 cleanup() {
-    echo "Cleaning up..."
+    echo "\n"
+    display_startup_message "SHUTTING DOWN: $STARTUP_MSG" $MSG_WIDTH
+
     # Read PIDs from file and terminate the processes
     if [ -f "$ABS_PID_FILE" ]; then
         while IFS= read -r pid; do
             if [ -n "$pid" ]; then
-                echo "Stopping process $pid"
+
+                echo "${YELLOW}Stopping process $pid ${RESET}"
+                #echo "Stopping process $pid"
                 kill "$pid" 2>/dev/null
                 if [ $? -ne 0 ]; then
-                    echo "Failed to stop process $pid"
+                    echo "${RED}Failed to stop process $pid.${RESET}"
+                    #echo "Failed to stop process $pid"
+                else
+                    echo "${GREEN}Process $pid has stopped.${RESET}"
                 fi
             fi
         done < "$ABS_PID_FILE"
@@ -91,64 +85,57 @@ cleanup() {
 # Trap signals and call cleanup function
 trap cleanup INT TERM
 
-
 # Dev/Prod backend server
 dev_backend() {
-    echo "${YELLOW}===== STARTING: Dev/Prod backend server startup =====${RESET}"
+    echo "${BOLD}${YELLOW}${EQUALS} STARTING: Dev/Prod backend server startup ${EQUALS}${RESET}"
     cd backend || exit 1
     pip3 install -r requirements.txt
     nohup python3 app.py > backend.log 2>&1 &
     BACKEND_PID=$!
-    #echo "Backend server started with PID: $BACKEND_PID"
-    echo "$BACKEND_PID" >> "$ABS_PID_FILE"
     cd ..
-    echo "${GREEN}===== COMPLETED: Dev/Prod backend server startup, PID:$BACKEND_PID =====${RESET}\n"
+    echo "$BACKEND_PID" >> "$ABS_PID_FILE"
+    echo "${BOLD}${GREEN}${EQUALS} COMPLETED: Dev/Prod backend server startup, PID:$BACKEND_PID ${EQUALS}${RESET}\n"
 }
 
 # Dev frontend server
 dev_frontend() {
-    echo "===== STARTING: Dev frontend server startup ====="
+    echo "${BOLD}${YELLOW}${EQUALS} STARTING: Dev frontend server startup ${EQUALS}${RESET}"
     cd frontend || exit 1
     npm install
     nohup npm start > frontend.log 2>&1 &
     FRONTEND_PID=$!
-    #echo "Fronted server started with PID: $FRONTEND_PID"
-    echo "$FRONTEND_PID" >> "$ABS_PID_FILE"
     cd ..
-    echo "===== COMPLETED: Dev frontend server startup, PID:$FRONTEND_PID  =====\n"
+    echo "$FRONTEND_PID" >> "$ABS_PID_FILE"
+    echo "${BOLD}${GREEN}${EQUALS} COMPLETED: Dev frontend server startup, PID:$FRONTEND_PID ${EQUALS}${RESET}\n\n"
 }
 
 # Prod frontend build
 prod_frontend() {
-    echo "===== STARTING: Dev frontend build ====="
+    echo "${BOLD}${YELLOW}${EQUALS} STARTING: Dev frontend build ${EQUALS}${RESET}"
     cd frontend || exit 1
     npm install
-    #nohup npm start > frontend.log 2>&1 &
     npm run build
-    #FRONTEND_PID=$!
-    #echo "Fronted server started with PID: $FRONTEND_PID"
-    #echo "$FRONTEND_PID" >> "$ABS_PID_FILE"
     cd ..
-    echo "===== COMPLETED: Dev frontend build ====="
+    echo "${BOLD}${GREEN}${EQUALS} COMPLETED: Dev frontend build ${EQUALS}${RESET}\n"
 }
 
 # Start the proxy server
 dev_proxy() {
-    echo "===== STARTING: Dev proxy server ====="
+    echo "${BOLD}${YELLOW}${EQUALS} STARTING: Dev proxy server ${EQUALS}${RESET}"
     cd devserver || exit 1
     npm install
     nohup npm start > devserver.log 2>&1 &
     PROXY_PID=$!
-    #echo "Proxy server started with PID: $PROXY_PID"
-    echo "$PROXY_PID" >> "$ABS_PID_FILE"
     cd ..
-    echo "===== COMPLETED: Dev proxy server, PID:$PROXY_PID =====\n"
+    echo "$PROXY_PID" >> "$ABS_PID_FILE"
+    echo "${BOLD}${GREEN}${EQUALS} COMPLETED: Dev proxy server, PID:$PROXY_PID ${EQUALS}${RESET}\n"
 }
 
+# Reatart the nginx production server
 prod_deploy() {
-    echo "===== STARTING: Prod static deployment ====="
+    echo "${BOLD}${YELLOW}${EQUALS} STARTING: Prod static deployment ${EQUALS}${RESET}"
     sudo service nginx restart
-    echo "===== COMPLETED: Prod static deployment ====="
+    echo "${BOLD}${GREEN}${EQUALS} COMPLETED: Prod static deployment ${EQUALS}${RESET}\n"
 }
 
 # Wait for all background processes to finish
@@ -160,9 +147,7 @@ if [ "$DEV_MODE" = true ]; then
     dev_frontend
     dev_proxy
 
-    wait "$BACKEND_PID"
-    wait "$FRONTEND_PID"
-    wait "$PROXY_PID"
+
     
 else
     # Run production functions
@@ -171,8 +156,14 @@ else
     prod_deploy
     #echo "123"
 
-    wait "$BACKEND_PID"
+    #wait "$BACKEND_PID"
     #wait "$FRONTEND_PID"
     #wait "$PROXY_PID"
 fi
 
+display_startup_message "COMPLETED: $STARTUP_MSG" $MSG_WIDTH
+echo "${BLUE}NOTE: Press Ctrl+C to shutdown all servers. ${RESET}"
+
+wait "$BACKEND_PID"
+wait "$FRONTEND_PID"
+wait "$PROXY_PID"
