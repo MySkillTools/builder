@@ -6,6 +6,7 @@ const app = express();
 const port = 8000;
 
 // Proxy requests from the api backend to localhost:5000
+// [Put this first!]
 app.use('/api', createProxyMiddleware({
     target: 'http://localhost:5000/',
     changeOrigin: true,
@@ -21,11 +22,10 @@ app.listen(port, () => {
     console.log(`Proxy server is running on http://localhost:${port}`);
 });
 
-//const open = require('open');
 open('http://localhost:8000')
-  .then(() => {
-    console.log('URL opened in default browser');
-  })
-  .catch(err => {
-    console.error('Error opening URL:', err);
-  });
+    .then(() => {
+        console.log('URL opened in default browser');
+    })
+    .catch(err => {
+        console.error('Error opening URL:', err);
+    });

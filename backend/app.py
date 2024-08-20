@@ -25,16 +25,6 @@ def create_app():
             response.set_cookie('user_id', g.user_id, max_age=max_age)
         return response
 
-    #@app.route('/')
-    #def home():
-    #    print("home")
-    #    return send_from_directory(app.static_folder, 'index.html')
-
-    # Catch-all for serving React app for all other routes
-    #@app.errorhandler(404)
-    #def not_found(e):
-    #    return send_from_directory(app.static_folder, 'index.html')
-
     return app
 
 
