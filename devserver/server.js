@@ -5,8 +5,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 const app = express();
 const port = 8000;
 
-// Proxy requests from the api backend to localhost:5000
-// [Put this first!]
+// Proxy requests from the api backend to localhost:5000 [Put this first!]
 app.use('/api', createProxyMiddleware({
     target: 'http://localhost:5000/',
     changeOrigin: true,
