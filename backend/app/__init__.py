@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import OperationalError, SQLAlchemyError
+#from sqlalchemy.exc import OperationalError, SQLAlchemyError
 
 db = SQLAlchemy()
 
@@ -23,6 +23,6 @@ def create_app():
     from app.resources.SkillList import SkillList
     from flask_restful import Api
     api = Api(app)
-    api.add_resource(SkillList, '/skills')
+    api.add_resource(SkillList, '/skillList')
 
     return app

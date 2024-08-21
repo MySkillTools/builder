@@ -1,3 +1,5 @@
+
+'''
 from flask import Flask, g, send_from_directory
 #from flask_cors import CORS
 from flask_restful import Api
@@ -51,3 +53,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         app.run(debug=True)
+'''
