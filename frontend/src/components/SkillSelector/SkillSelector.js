@@ -5,16 +5,32 @@ import { Link } from 'react-router-dom';
 import AlertMessage from '../AlertMessage/AlertMessage';
 
 import './SkillSelector.scss';
-import { skills } from './skillsData';  // Import the skills array
+//import { skills } from './skillsData';  // Import the skills array
+
+import { useApiData } from '../../hooks/apiHooks';
 
 // Component to handle the rendering of individual skills
-function Skill({ skill, onAddSkill, isSelected }) {
+function Skill({ skill, onAddSkill, isSelected, color }) {
+
+    if(!color.startsWith('#')){
+        color = '#' + color;
+    }
+    
+    const style = {
+        //backgroundColor: `${color}`, // Ensure the color starts with '#'
+        color: `${color}`, 
+        borderColor: `${color}`
+    };
+
+    // console.log(style)
+
     return (
         <button
             key={skill.id}
             onClick={() => onAddSkill(skill)}
             className="skill"
             disabled={isSelected}
+            style={style}
         >
             {skill.name}
         </button>
@@ -39,7 +55,7 @@ function SkillGroup({ group, index, onRemoveGroup }) {
                     </div>
                     <div className="cell">
                         {group.items.map((item, index) => (
-                            <Draggable key={item.id} draggableId={item.id} index={index}>
+                            <Draggable key={item.id} draggableId={String(item.id)} index={index}>
                                 {(provided) => (
                                     <div
                                         ref={provided.innerRef}
@@ -128,6 +144,26 @@ const SkillTable = ({ data }) => {
 };
 
 function SkillSelector() {
+
+    const { data : skills, loading, error } = useApiData('/skillList');
+    //console.log("1111111111111");
+    //console.log(skills);
+    //console.log("Loading:", loading);
+    //console.log(error)
+
+    //if(skills) {
+    //    console.log(skills.skills);
+    //}
+
+    // Transforming the array to a new format
+    //const transformedSkills = skills.map(skill => ({
+    //    skill_id: `skill${skill.id}`, // Prefixing id with 'skill'
+    //    skill_name: skill.name,
+    //    skill_category: skill.category
+    //}));
+
+    //console.log(transformedSkills);
+    
 
     // Track selected skills
     const [selectedSkillIds, setSelectedSkillIds] = useState(new Set()); // Set to track selected skill IDs
@@ -287,12 +323,13 @@ function SkillSelector() {
                                 */}
 
                                 <div className="cell my-2">
-                                    {skills.map(skill => (
+                                    {skills && skills.skills.map(skill => (
                                         <Skill
                                             key={skill.id}
                                             skill={skill}
                                             onAddSkill={handleAddSkill}
                                             isSelected={selectedSkillIds.has(skill.id)}
+                                            color={skill.color}
                                         />
                                     ))}
                                 </div>

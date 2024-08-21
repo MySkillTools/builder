@@ -2,11 +2,13 @@ import React from 'react';
 
 //import Tooltip from '../Tooltip/Tooltip';
 
-import useUserData from '../../hooks/useUserData';
+//import useUserData from '../../hooks/useUserData';
+import { useApiData } from '../../hooks/apiHooks';
 import { Tooltip } from 'react-tooltip'
 
 function UserInfo() {
-    const { user, loading, error } = useUserData();
+    //const { user, loading, error } = useUserData();
+    const { data: user, loading, error } = useApiData('/user');
 
     return (
         <div className="card">

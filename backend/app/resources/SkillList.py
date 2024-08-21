@@ -67,15 +67,15 @@ class SkillList(Resource):
             skills_data = paginated_skills.items
 
             result = [{
-                'skill_id': skill.id,
-                'skill_name': skill.name,
-                'category_name': skill.category.name,
-                'category_color': skill.category.color
+                'id': skill.id,
+                'name': skill.name,
+                'category': skill.category.name,
+                'color': skill.category.color
             } for skill in skills_data]
 
             pagination_info = {
-                'total_items': paginated_skills.total,
-                'total_pages': paginated_skills.pages,
+                'count': paginated_skills.total,
+                'pages': paginated_skills.pages,
                 'current_page': paginated_skills.page,
                 'per_page': paginated_skills.per_page
             }
@@ -86,10 +86,10 @@ class SkillList(Resource):
             
             skills_data = Skill.query.join(Category).all()
             result = [{
-                'skill_id': skill.id,
-                'skill_name': skill.name,
-                'category_name': skill.category.name,
-                'category_color': skill.category.color
+                'id': skill.id,
+                'name': skill.name,
+                'category': skill.category.name,
+                'color': skill.category.color
             } for skill in skills_data]
             
             return {'skills': result}

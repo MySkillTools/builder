@@ -1,3 +1,5 @@
+//import { useApiData } from "../../hooks/apiHooks";
+
 export const skills = [
     { id: 'skill1', name: 'HTML' },
     { id: 'skill2', name: 'CSS' },
