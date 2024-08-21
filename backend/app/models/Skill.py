@@ -1,5 +1,5 @@
 from app import db
-#from Category import Category
+from app.models.Category import Category
 
 class Skill(db.Model):
     __tablename__ = 'skill'

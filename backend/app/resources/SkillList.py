@@ -1,6 +1,6 @@
 from flask_restful import Resource
-from ..models import Skill
-from ..models import Category
+from app.models import Skill
+from app.models import Category
 
 class SkillList(Resource):
     def get(self):

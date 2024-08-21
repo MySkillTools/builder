@@ -34,21 +34,20 @@ def create_app():
 
 
 
-if __name__ == '__main__':
-    app = create_app()
-    #CORS(app, supports_credentials=True)
+app = create_app()
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///skills.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///skills.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 
-    api = Api(app)
+api = Api(app)
     
 
-    api.add_resource(UserResource.UserResource, '/user')
-    api.add_resource(SkillList.SkillList, '/skillList')
+api.add_resource(UserResource.UserResource, '/user')
+api.add_resource(SkillList.SkillList, '/skillList')
 
+if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         app.run(debug=True)
