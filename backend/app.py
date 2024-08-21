@@ -1,12 +1,14 @@
 from flask import Flask, g, send_from_directory
-from flask_cors import CORS
+#from flask_cors import CORS
 from flask_restful import Api
+from flask_sqlalchemy import SQLAlchemy
 
 import user
 #import UserResource
 import config
 
 from resources import UserResource
+from resources import SkillList
 
 def create_app():
     app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -36,7 +38,17 @@ if __name__ == '__main__':
     app = create_app()
     #CORS(app, supports_credentials=True)
 
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///skills.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db = SQLAlchemy(app)
+
+
     api = Api(app)
+    
 
     api.add_resource(UserResource.UserResource, '/user')
-    app.run(debug=True)
+    api.add_resource(SkillList.SkillList, '/skillList')
+
+    with app.app_context():
+        db.create_all()
+        app.run(debug=True)

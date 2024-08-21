@@ -1,4 +1,5 @@
 flask
 flask-restful
+flask_sqlalchemy 
 shortuuid
-flask-cors
+#flask-cors
