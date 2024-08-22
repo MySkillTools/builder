@@ -1,3 +1,4 @@
+'''
 from flask_restful import Resource
 import user
 import config
@@ -5,7 +6,7 @@ import config
 
 class UserResource(Resource):
     def get(self):
-        """Retrieve user ID and its expiration date."""
+        # Retrieve user ID and its expiration date.
         user_id = user.get_user_id()
         expiration_date = user.renew_cookie(config.COOKIE_LIFESPAN)  # Set expiration to 1 year
         
@@ -16,3 +17,4 @@ class UserResource(Resource):
         }
 
         return response, 200
+'''

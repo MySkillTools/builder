@@ -20,7 +20,7 @@ def create_app():
         #except (OperationalError, SQLAlchemyError) as e:
         #    raise RuntimeError(f"Failed to connect to the database: {e}")
 
-    from app.resources.SkillList import SkillList
+    from resources.SkillList import SkillList
     from flask_restful import Api
     api = Api(app)
     api.add_resource(SkillList, '/skillList')

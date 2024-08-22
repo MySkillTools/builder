@@ -1,6 +1,8 @@
+"""
 from flask import request
 import shortuuid
 from datetime import datetime, timedelta
+"""
 
 """
     Calculate the new expiration date for a cookie.
@@ -20,8 +22,10 @@ from datetime import datetime, timedelta
         datetime.datetime(2025, 8, 19, 14, 30, 0, 123456)  # Example output
 """
 
+"""
 def renew_cookie(days):
     return datetime.utcnow() + timedelta(days=days)
+"""
 
 """
     Calculate the maximum age for a cookie based on its expiration date.
@@ -44,9 +48,11 @@ def renew_cookie(days):
         86400  # Number of seconds in a day
 """
 
+"""
 def get_max_age(expiration_date):
     return int((expiration_date - datetime.utcnow()).total_seconds())
-  
+"""
+
 """
     Retrieve or generate a user ID from the request cookies.
 
@@ -63,8 +69,10 @@ def get_max_age(expiration_date):
         '9r7U8a93gCzL'  # Example output
 """
 
+"""
 def get_user_id():
     user_id = request.cookies.get('user_id')
     if not user_id:
         user_id = shortuuid.uuid()
     return user_id
+"""

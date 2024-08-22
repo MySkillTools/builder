@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-from app.models.Skill import Skill
-from app.models.Category import Category
+from models.Skill import Skill
+from models.Category import Category
 
 """
     Resource representing a list of skills, optionally paginated.
@@ -18,38 +18,6 @@ from app.models.Category import Category
         JSON object containing a list of skills with their associated category details. If pagination is used,
         additional pagination information is included. If pagination parameters are not provided, all skills
         are returned without pagination data.
-
-    Example Response (Paginated):
-        {
-            "skills": [
-                {
-                    "skill_id": 1,
-                    "skill_name": "JavaScript",
-                    "category_name": "Web Development",
-                    "category_color": "#ff7f50"
-                },
-                ...
-            ],
-            "pagination": {
-                "total_items": 50,
-                "total_pages": 5,
-                "current_page": 1,
-                "per_page": 10
-            }
-        }
-
-    Example Response (Non-Paginated):
-        {
-            "skills": [
-                {
-                    "skill_id": 1,
-                    "skill_name": "JavaScript",
-                    "category_name": "Web Development",
-                    "category_color": "#ff7f50"
-                },
-                ...
-            ]
-        }
 """
 
 class SkillList(Resource):
