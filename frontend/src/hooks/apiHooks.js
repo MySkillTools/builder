@@ -1,17 +1,20 @@
-// apiHooks.js
-
 import { useState, useEffect } from 'react';
 
 const API_URL = '/api'; // Base URL for your API
 
+// Function to get the JWT token from local storage or context
+const getToken = () => localStorage.getItem('token');
+
 // Enhanced utility function to handle various API requests
 const apiRequest = async (endpoint, method = 'GET', payload = null, headers = {}) => {
     try {
+        const token = getToken(); // Retrieve token
         const options = {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
                 ...headers,
+                ...(token && { 'Authorization': `Bearer ${token}` }), // Add token to headers if available
             },
         };
 

@@ -25,4 +25,10 @@ def create_app():
     from resources.Login import Login
     api.add_resource(Login, '/login')
 
+    from resources.ProtectedResource import ProtectedResource
+    api.add_resource(ProtectedResource, '/protected')
+
+    from resources.TokenRefresh import TokenRefresh
+    api.add_resource(TokenRefresh, '/refresh')
+
     return app

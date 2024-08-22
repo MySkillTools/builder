@@ -22,13 +22,16 @@ function Home() {
 
                         { /*
                         <BuildSkillBank />
-                        */ }
+                        
                         <SkillSelector />
+                        */ }
                     </div>
 
+                    { /*
                     <div>
                         HELLO
                     </div>
+                    */ }
                     
                 </div>
             </div>
