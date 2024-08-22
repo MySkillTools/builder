@@ -1,28 +1,28 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-#from sqlalchemy.exc import OperationalError, SQLAlchemyError
+from flask_jwt_extended import JWTManager
+from flask_restful import Api
 
 db = SQLAlchemy()
+jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/root/MSB/db/msb.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/steven/MSB/db/msb.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
+    app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Replace with a secure key
+
     db.init_app(app)
+    jwt.init_app(app)
 
-    #with app.app_context():
-        #try:
-        #    # Establish a connection and execute a test query
-        #    with db.engine.connect() as connection:
-        #        result = connection.execute("SELECT 1")
-        #        print(result.scalar())  # This will print '1' if successful
-        #except (OperationalError, SQLAlchemyError) as e:
-        #    raise RuntimeError(f"Failed to connect to the database: {e}")
-
-    from resources.SkillList import SkillList
-    from flask_restful import Api
     api = Api(app)
+
+    # Import and add resources here
+    from resources.SkillList import SkillList
     api.add_resource(SkillList, '/skillList')
+
+    # Import and add login resource here
+    from resources.Login import Login
+    api.add_resource(Login, '/login')
 
     return app
