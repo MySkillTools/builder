@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     }, [auth.token]);
 
     const login = async (username, password) => {
-        try {
+        //try {
             const response = await apiRequest('/login', 'POST', { username, password });
             const { access_token } = response;
             localStorage.setItem('token', access_token);
@@ -44,9 +44,9 @@ export const AuthProvider = ({ children }) => {
                 user: username,
                 token: access_token
             });
-        } catch (error) {
-            console.error('Login failed:', error);
-        }
+        //} catch (error) {
+        //    console.error('Login failed:', error);
+        //}
     };
 
     const logout = () => {

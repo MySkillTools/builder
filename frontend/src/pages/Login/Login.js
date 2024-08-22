@@ -1,25 +1,31 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom'; // Updated import
+import { toast } from 'react-toastify';
 
 import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer';
+//import AlertMessage from '../../components/AlertMessage/AlertMessage';
 
 import "./Login.scss";
 
 const LoginPage = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useContext(AuthContext);
+    const { auth, login } = useContext(AuthContext);
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await login(username, password);
-            navigate('/protected'); // Redirect to protected route
+            await login(email, password);
+            //navigate('/protected'); // Redirect to protected route
+
+            console.log(auth.isAuthenticated)
+
         } catch (error) {
-            console.error('Login failed:', error);
+            //console.warn('Login failed:', error);
+            toast.error(String(error));
         }
     };
 
@@ -27,8 +33,8 @@ const LoginPage = () => {
         <div id="app">
             <Navbar />
 
-            <div class="container">
-                <div class="centered-div">
+            <div class="login-container">
+                <div class="login-box">
                     <div className='d-flex justify-content-center mb-3'>
                         <h4 className="custom-card-header">Login to MSB</h4>
                     </div>
@@ -36,7 +42,7 @@ const LoginPage = () => {
                     <div>
 
                         {/* Email */}
-                        <label htmlFor="username" className="form-label fw-bold">Email</label>
+                        <label htmlFor="email" className="form-label fw-bold">Email</label>
                         <div className="input-group mb-3">
                             <span className="input-group-text">
                                 <i className="fa-solid fa-envelope"></i>
@@ -44,10 +50,10 @@ const LoginPage = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Enter your username"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email address"
                                 required
                             />
                         </div>
@@ -69,21 +75,21 @@ const LoginPage = () => {
                             />
                         </div>
 
-                        <button type="button" className="btn btn-outline-primary w-100">
+                        <button type="button" className="btn btn-outline-primary w-100" onClick={handleSubmit}>
                             <i class="fa-solid fa-right-to-bracket"></i>&nbsp;Login
                         </button>
 
 
                         {/*
                         <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Username</label>
+                            <label htmlFor="email" className="form-label">email</label>
                             <input
                                 type="text"
                                 className="form-control"
-                                id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Enter your username"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setemail(e.target.value)}
+                                placeholder="Enter your email"
                                 required
                             />
                         </div>
@@ -116,14 +122,14 @@ const LoginPage = () => {
                                 <h2 className="card-title text-center mb-4">Login</h2>
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
-                                        <label htmlFor="username" className="form-label">Username</label>
+                                        <label htmlFor="email" className="form-label">email</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="username"
-                                            value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
-                                            placeholder="Enter your username"
+                                            id="email"
+                                            value={email}
+                                            onChange={(e) => setemail(e.target.value)}
+                                            placeholder="Enter your email"
                                             required
                                         />
                                     </div>

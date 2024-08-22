@@ -5,12 +5,14 @@
 import React, { Suspense, useContext, lazy } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { AuthProvider, AuthContext } from './contexts/AuthContext';
 
 // Styling
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import './styles/style.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Lazy loaded components
 const About = lazy(() => import('./pages/About/About'));
@@ -50,6 +52,7 @@ function App() {
 ReactDOM.render(
     <AuthProvider>
         <App />
+        <ToastContainer />
     </AuthProvider>,
     document.getElementById('root')
 );

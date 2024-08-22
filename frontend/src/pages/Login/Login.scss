@@ -1,26 +1,16 @@
-/* Container styles */
-.container {
+.login-container {
     display: flex;
-    justify-content: center; /* Align horizontally */
-    align-items: center;    /* Align vertically */
-    height: 70vh;          /* Full viewport height */
-    padding: 20px;         /* Padding around the container */
-    box-sizing: border-box; /* Ensure padding is included in height */
-  }
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    padding: 20px; 
+    box-sizing: border-box;
+}
   
-  /* Centered div styles */
-  .centered-div {
-    width: 500px;               /* Adjust width */
-    //height: 300px;              /* Adjust height */
-    background-color: #fff;    /* Background color */
-    //color: #333;                /* Text color */
-    //display: flex;
-    //justify-content: center;
-    //align-items: center;
-    //text-align: center;
-    border-radius: 8px;        /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
-    padding: 20px;             /* Internal padding */
-    font-family: Arial, sans-serif; /* Font style */
-  }
-  
+.login-box {
+    width: 500px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
