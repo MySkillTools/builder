@@ -25,12 +25,20 @@ const apiRequest = async (endpoint, method = 'GET', payload = null, headers = {}
 
         const response = await fetch(`${API_URL}${endpoint}`, options);
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'An error occurred');
-        }
+        //if (!response.ok) {
 
-        return await response.json();
+        //    console.log(response);
+
+        //    const errorData = await response.json();
+
+        //    console.log(errorData);
+
+        //    throw new Error(JSON.stringify(errorData.message) || 'An error occurred');
+        //}
+
+        //return await response.json();
+        return response;
+
     } catch (error) {
         console.error('API Error:', error);
         throw error; // Rethrow the error to be handled by the caller

@@ -8,8 +8,10 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({
         isAuthenticated: false,
+        hasError: true,
         user: null,
         token: localStorage.getItem('token') || null,
+        msg: '' // New state for login messages
     });
 
     useEffect(() => {
@@ -18,35 +20,71 @@ export const AuthProvider = ({ children }) => {
             apiRequest('/protected', 'GET', null, {
                 'Authorization': `Bearer ${auth.token}`
             })
-            .then(response => setAuth({
-                isAuthenticated: true,
-                user: response.user, // Adjust based on your API response
-                token: auth.token
-            }))
+            .then(response => response.json())
+            .then(data => {
+                setAuth(prevAuth => ({
+                    ...prevAuth,
+                    isAuthenticated: true,
+                    user: data.user, // Adjust based on your API response
+                    msg: ''
+                }));
+            })
             .catch(() => {
                 setAuth({
                     isAuthenticated: false,
                     user: null,
-                    token: null
+                    token: null,
+                    msg: 'Session expired, please log in again'
                 });
                 localStorage.removeItem('token');
             });
         }
     }, [auth.token]);
 
-    const login = async (username, password) => {
-        //try {
-            const response = await apiRequest('/login', 'POST', { username, password });
-            const { access_token } = response;
-            localStorage.setItem('token', access_token);
+    const login = async (email, password) => {
+        try {
+            const response = await apiRequest('/login', 'POST', { email, password });
+            const data = await response.json();
+
+            console.log(response)
+
+            if (response.ok) {
+                const { access_token } = data; // Assuming the token is in the JSON response
+                localStorage.setItem('token', access_token);
+                setAuth({
+                    isAuthenticated: true,
+                    hasError: false,
+                    user: email,
+                    token: access_token,
+                    msg: 'Login successful'
+                });
+            } else if (response.status === 401) {
+                setAuth({
+                    isAuthenticated: false,
+                    hasError: false,
+                    user: null,
+                    token: null,
+                    msg: data.message || 'Invalid credentials'
+                });
+            } else {
+                setAuth({
+                    isAuthenticated: false,
+                    hasError: true,
+                    user: null,
+                    token: null,
+                    msg: data.message || 'An error occurred. Backend server returns HTTP status code ' + response.status
+                });
+            }
+        } catch (error) {
+            //console.error('Login failed:', error);
             setAuth({
-                isAuthenticated: true,
-                user: username,
-                token: access_token
+                isAuthenticated: false,
+                hasError: true,
+                user: null,
+                token: null,
+                msg: error
             });
-        //} catch (error) {
-        //    console.error('Login failed:', error);
-        //}
+        }
     };
 
     const logout = () => {
@@ -54,9 +92,15 @@ export const AuthProvider = ({ children }) => {
         setAuth({
             isAuthenticated: false,
             user: null,
-            token: null
+            token: null,
+            msg: ''
         });
     };
+
+    // Use useEffect to log the updated auth state
+    useEffect(() => {
+        console.log('Updated auth state:', auth);
+    }, [auth]);
 
     return (
         <AuthContext.Provider value={{ auth, login, logout }}>

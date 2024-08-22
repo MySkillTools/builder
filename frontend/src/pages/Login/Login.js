@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom'; // Updated import
 import { toast } from 'react-toastify';
@@ -15,19 +15,61 @@ const LoginPage = () => {
     const { auth, login } = useContext(AuthContext);
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            await login(email, password);
+    //const handleSubmit = async (e) => {
+    //    e.preventDefault();
+    //    try {
+    //        await login(email, password);
             //navigate('/protected'); // Redirect to protected route
 
-            console.log(auth.isAuthenticated)
+            //console.log(auth.isAuthenticated)
+            //console.log(auth.user)
+            //console.log(auth.token)
+            //console.log(auth.loginMessage)
 
-        } catch (error) {
-            //console.warn('Login failed:', error);
-            toast.error(String(error));
-        }
+            //setTimeout(() => {
+            //    console.log(auth.isAuthenticated);
+            //    console.log(auth.user);
+            //    console.log(auth.token);
+            ///    console.log(auth.loginMessage);
+            //}, 100);
+
+    //        console.log("hello")
+    //        console.log(auth)   // FIXME: Still undefined user
+
+    //    } catch (error) {
+    //        console.warn('Login failed:', error);
+    //        toast.error(String(error));
+    //    }
+    //};
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        //try {
+            await login(email, password);
+
+            // Use setTimeout as a workaround to allow state update for debugging (if necessary)
+            setTimeout(() => {
+                console.log(auth.isAuthenticated);
+                console.log(auth.user);
+                console.log(auth.token);
+                console.log(auth.loginMessage);
+            }, 100);
+
+            // Redirect to protected route only after login is successful
+            if (auth.isAuthenticated) {
+                //navigate('/protected');
+            }
+
+        //} catch (error) {
+        //    console.warn('Login failed:', error);
+        //    toast.error(String(error));
+        //}
     };
+
+    // Logging auth state when it changes
+    useEffect(() => {
+        console.log('Updated auth state 11111111111:', auth);
+    }, [auth]);
 
     return (
         <div id="app">

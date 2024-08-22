@@ -82,8 +82,10 @@ class Login(Resource):
 
         #print(User.query.all())
         #print(args['email'])
-        print(user)
-        print(user.check_password(args['password']))
+        #print(args)
+        #print(user)
+        #print('11111111111111111111111111111111')
+        #print(user.check_password(args['password']))
 
         if user and user.check_password(args['password']):
             access_token = create_access_token(identity={'email': user.email})
