@@ -8,7 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({
         isAuthenticated: false,
-        hasError: true,
+        hasError: false,
         user: null,
         token: localStorage.getItem('token') || null,
         msg: '' // New state for login messages

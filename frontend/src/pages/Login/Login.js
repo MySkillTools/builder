@@ -48,17 +48,17 @@ const LoginPage = () => {
             await login(email, password);
 
             // Use setTimeout as a workaround to allow state update for debugging (if necessary)
-            setTimeout(() => {
-                console.log(auth.isAuthenticated);
-                console.log(auth.user);
-                console.log(auth.token);
-                console.log(auth.loginMessage);
-            }, 100);
+            //setTimeout(() => {
+            //    console.log(auth.isAuthenticated);
+            //    console.log(auth.user);
+            //    console.log(auth.token);
+            //    console.log(auth.loginMessage);
+            //}, 100);
 
             // Redirect to protected route only after login is successful
-            if (auth.isAuthenticated) {
-                //navigate('/protected');
-            }
+            //if (auth.isAuthenticated) {
+            //    //navigate('/protected');
+            //}
 
         //} catch (error) {
         //    console.warn('Login failed:', error);
@@ -68,8 +68,34 @@ const LoginPage = () => {
 
     // Logging auth state when it changes
     useEffect(() => {
-        console.log('Updated auth state 11111111111:', auth);
+        //console.log('Updated auth state 11111111111:', auth);
+
+        // Case 1: Error in login (e.g., 500 internal server error)
+        if(auth.hasError) {
+            //alert(auth.msg)
+            //console.log(auth.msg)
+            toast.error(String(auth.msg));
+        }
+
+        // Case 2: Login successful
+        else if (auth.isAuthenticated) {
+            toast.success('Login success!');
+            setTimeout(() => {
+                navigate('/');
+            }, 500);
+        }
+
+        // Case 3: Login failed (e.g., incorrect password)
+        else if (auth.msg != null && auth.msg.length > 0) {
+            toast.warn(String(auth.msg));
+        }
+
+        // Hidden case 4: First visit this page, do nothing
     }, [auth]);
+
+    //useEffect(() => {
+    //    toast.success('This is a test message!');
+    //  }, []);
 
     return (
         <div id="app">
