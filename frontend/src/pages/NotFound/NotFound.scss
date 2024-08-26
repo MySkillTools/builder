@@ -1,0 +1,24 @@
+.error-page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    //background-color: $background-color;
+
+    .error-code {
+        font-size: 10rem;
+        font-weight: bold;
+        //color: $primary;
+    }
+
+    .error-message {
+        font-size: 1.5rem;
+        //color: $text-color;
+        margin-bottom: 1rem;
+    }
+
+    .btn {
+        margin-top: 1rem;
+    }
+}

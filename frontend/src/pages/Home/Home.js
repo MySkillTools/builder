@@ -2,8 +2,8 @@ import React from 'react';
 import Navbar from '../../components/NavBar/Navbar';
 import Footer from '../../components/Footer/Footer'; 
 
-import BuildSkillBank from '../../components/BuildSkillBank/BuildSkillBank';
-import SkillSelector from '../../components/SkillSelector/SkillSelector';
+//import BuildSkillBank from '../../components/BuildSkillBank/BuildSkillBank';
+//import SkillSelector from '../../components/SkillSelector/SkillSelector';
 
 function Home() {
 
