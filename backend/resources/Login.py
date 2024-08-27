@@ -47,12 +47,14 @@ class Login(Resource):
 
         Example Response on Success:
         {
+            "message": "success",
             "access_token": "your_jwt_token_here"
         }
 
         Example Response on Failure:
         {
-            "message": "Invalid credentials"
+            "message": "Invalid credentials",
+            "access_token": null
         }
 
         2. User Login with Invalid Credentials
@@ -68,7 +70,8 @@ class Login(Resource):
 
         Example Response:
         {
-            "message": "Invalid credentials"
+            "message": "Invalid credentials",
+            "access_token": null
         }
     """
 
@@ -80,15 +83,19 @@ class Login(Resource):
 
         user = User.query.filter_by(email=args['email']).first()
 
-        #print(User.query.all())
-        #print(args['email'])
-        #print(args)
-        #print(user)
-        #print('11111111111111111111111111111111')
-        #print(user.check_password(args['password']))
-
+        # Login successful
         if user and user.check_password(args['password']):
             access_token = create_access_token(identity={'email': user.email})
-            return {'access_token': access_token}, 200
+            return {
+                'user': args['email'],
+                'message': 'success',
+                'access_token': access_token
+            }, 200
         
-        return {'message': 'Invalid credentials'}, 401
+        # Login failed
+        else:
+            return {
+                'user': None,
+                'message': 'Invalid credentials',
+                'access_token': None
+            }, 401

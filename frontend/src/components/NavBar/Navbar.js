@@ -47,7 +47,7 @@ const Navbar = () => {
                         {auth.isAuthenticated && (
                             <li className="nav-item">
                                 <Link className={`nav-link navbar-border ${currentPath === '/mySkillBank' ? 'active' : ''}`} to="/mySkillBank">
-                                    <i className="fa-solid fa-database"></i>&nbsp;My Skill Bank
+                                    <i className="fa-solid fa-database"></i>&nbsp;Skills
                                 </Link>
                             </li>
                         )}
@@ -93,7 +93,7 @@ const Navbar = () => {
                         {/* GitHub */}
                         <li className="nav-item">
                             <a className="nav-link navbar-border" href="https://github.com/stewebb/MSB" target="_blank" rel="noopener noreferrer">
-                                <i className="fab fa-github"></i>&nbsp;GitHub Repo
+                                <i className="fab fa-github"></i>
                             </a>
                         </li>
                     </ul>
