@@ -27,7 +27,7 @@ const LoginPage = () => {
         try {
             await login(email, password);
         } catch (error) {
-            toast.error('An error occurred during login.');
+            toast.error('An error occurred during login.' + error);
         }
     };
 
@@ -42,23 +42,27 @@ const LoginPage = () => {
 
         if (auth) {
 
+            //console.log(auth);
+
             // Case 1: Error in login (e.g., 500 internal server error)
-            if (auth.hasError) {
-                toast.error(String(auth.msg || 'An error occurred.'));
+            if (auth.user === undefined) {
+                toast.error(String(auth.msg));
             }
 
-            // Case 2: Login successful
-            else if (auth.isAuthenticated) {
+            // Case 2: Login failed (e.g., incorrect password)
+            else if (auth.user === null) {
+                toast.warn(String(auth.msg));
+            }
+
+            // Case 3: Login successful
+            else {
                 toast.success('Login success!');
                 setTimeout(() => {
                     //navigate('/');
                 }, 500);
             }
 
-            // Case 3: Login failed (e.g., incorrect password)
-            else if (auth.msg) {
-                toast.warn(String(auth.msg));
-            }
+            
         }
     }, [auth, navigate]);
 

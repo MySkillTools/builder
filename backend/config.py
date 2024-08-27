@@ -1,2 +1,0 @@
-
-COOKIE_LIFESPAN = 30

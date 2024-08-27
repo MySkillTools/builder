@@ -31,4 +31,7 @@ def create_app():
     from resources.TokenRefresh import TokenRefresh
     api.add_resource(TokenRefresh, '/refresh')
 
+    from resources.User import User
+    api.add_resource(User, '/user')
+
     return app
