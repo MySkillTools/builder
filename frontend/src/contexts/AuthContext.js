@@ -48,8 +48,8 @@ export const AuthProvider = ({ children }) => {
      * Can be triggered manually.
      */
 
-    /*
-    const checkToken = async () => {
+    
+    const validate = async () => {
         //const default_errmsg = 'Session expired, please log in again';
         if (token) {
             try {
@@ -60,34 +60,37 @@ export const AuthProvider = ({ children }) => {
                 const data = await response.json();
 
                 // Case 1: Token validation passed (200 OK)
-                if (response.ok) {
-                    
-                    setToken(token);
+                if (response.status === 200) {
+                    handleLoginResult(token, data.user);
+                    //setToken(token);
                 }
                 // Case 2: Token validation failed (401 Unauthorized)
                 else if (response.status === 401) {
 
                     //const errorMsg = data.message || 'An error occurred during login';
-                    setToken(null);
-                    localStorage.removeItem('token');
+                    //setToken(null);
+                    //localStorage.removeItem('token');
+                    handleLoginResult(null, null);
                 }
 
                 // Case 3: Token validation error
                 else {
-                    setToken(undefined);
-                    localStorage.removeItem('token');
+                    //setToken(undefined);
+                    //localStorage.removeItem('token');
+                    handleLoginResult(undefined, null);
                 }
 
                 // else {
                 //    throw new Error('Invalid token');
                 //}
             } catch (error) {
-                setToken(undefined);
-                localStorage.removeItem('token');
+                //setToken(undefined);
+                //localStorage.removeItem('token');
+                handleLoginResult(undefined, null);
             }
         }
     };
-    */
+    
 
     /**
      * Logs in a user by sending their credentials to the server.
@@ -147,7 +150,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{token, login, logout}}>
+        <AuthContext.Provider value={{token, user, validate, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

@@ -11,7 +11,10 @@ const Navbar = () => {
     const currentPath = location.pathname;
     const navigate = useNavigate();
 
-    const { token, logout } = useContext(AuthContext); // Get authentication state
+    const { token, user, validate, logout } = useContext(AuthContext); // Get authentication state
+
+    validate();
+    //console.log(user)
 
     const isLoginPage = (currentPath === '/login');
 
@@ -76,7 +79,7 @@ const Navbar = () => {
                         {!isLoginPage && token && (
                             <li className="nav-item">
                                 <button className="nav-link navbar-border btn btn-link" onClick={logout}>
-                                    <i className="fa-solid fa-sign-out-alt"></i>&nbsp;Logout
+                                    <i className="fa-solid fa-sign-out-alt"></i>&nbsp;Logout | {user}
                                 </button>
                             </li>
                         )}

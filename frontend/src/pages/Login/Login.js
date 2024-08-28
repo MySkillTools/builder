@@ -58,8 +58,8 @@ const LoginPage = () => {
             else {
                 toast.success('Login success!');
                 setTimeout(() => {
-                    //navigate('/');
-                }, 500);
+                    navigate('/');
+                }, 1000);
             }
 
             
