@@ -26,10 +26,12 @@ const Login = lazy(() => import('./pages/Login/Login'));
 
 // ProtectedRoute component to protect private routes
 const ProtectedRoute = ({ element, ...rest }) => {
-    //const { auth } = useContext(AuthContext);
-    //return auth.isAuthenticated ? element : <Navigate to="/login" />;
+    const { token, validate } = useContext(AuthContext);
+    //TODO: checkToken
+    //validate();
+    return token ? element : <Navigate to="/login" />;
 
-    return element
+    //return element
 };
 
 function App() {

@@ -42,7 +42,7 @@ const LoginPage = () => {
 
         //if (token) {
 
-            //console.log(auth);
+            console.log(token);
 
             // Case 1: Error in login (e.g., 500 internal server error)
             if (token === undefined) {

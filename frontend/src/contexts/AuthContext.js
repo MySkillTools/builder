@@ -86,8 +86,6 @@ export const AuthProvider = ({ children }) => {
 
             // Case 1: Login successful (200 OK)
             if (response.ok) {
-                //const { access_token } = data;
-                //console.log(data.access_token)
 
                 localStorage.setItem('token', data.access_token);
                 setToken(data.access_token);
@@ -95,8 +93,8 @@ export const AuthProvider = ({ children }) => {
 
             // Case 2: Login failed (401 Unauthorized)
             else if (response.status === 401) {
-                //const errorMsg = data.message || 'An error occurred during login';
                 setToken(null);
+                console.log(token)
             }
 
             // Case 3: Login error (Returns any other HTTP status code)
@@ -104,9 +102,11 @@ export const AuthProvider = ({ children }) => {
                 setToken(undefined);
             }
 
-            // Case 3: Any other login error
-        } catch (error) {
-            //const errorMsg = error.message || 'An unexpected error occurred';
+        
+        } 
+        
+        // Case 4: Any other login error
+        catch (error) {
             setToken(undefined);
         }
     };
