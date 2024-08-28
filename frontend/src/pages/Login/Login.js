@@ -42,16 +42,16 @@ const LoginPage = () => {
 
         //if (token) {
 
-            console.log(token);
+            //console.log(token);
 
             // Case 1: Error in login (e.g., 500 internal server error)
             if (token === undefined) {
-                toast.error('Error!');
+                toast.error('Error when login!');
             }
 
             // Case 2: Login failed (e.g., incorrect password)
             else if (token === null) {
-                toast.warn('Login!');
+                toast.warn('Invalid credentials!');
             }
 
             // Case 3: Login successful
