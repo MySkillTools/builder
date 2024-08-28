@@ -11,7 +11,7 @@ const Navbar = () => {
     const currentPath = location.pathname;
     const navigate = useNavigate();
 
-    const { auth, logout } = useContext(AuthContext); // Get authentication state
+    const { token, logout } = useContext(AuthContext); // Get authentication state
 
     const isLoginPage = (currentPath === '/login');
 
@@ -44,7 +44,7 @@ const Navbar = () => {
                         </li>
 
                         {/* Conditionally Render My Skill Bank */}
-                        {auth.isAuthenticated && (
+                        {token && (
                             <li className="nav-item">
                                 <Link className={`nav-link navbar-border ${currentPath === '/mySkillBank' ? 'active' : ''}`} to="/mySkillBank">
                                     <i className="fa-solid fa-database"></i>&nbsp;Skills
@@ -53,7 +53,7 @@ const Navbar = () => {
                         )}
 
                         {/* Conditionally Render Settings */}
-                        {auth.isAuthenticated && (
+                        {token && (
                             <li className="nav-item">
                                 <Link className={`nav-link navbar-border ${currentPath === '/settings' ? 'active' : ''}`} to="/settings">
                                     <i className="fa-solid fa-gear"></i>&nbsp;Settings
@@ -73,7 +73,7 @@ const Navbar = () => {
                     <ul className="navbar-nav ms-auto">
 
                         {/* Display a logout button if logged in. */}
-                        {!isLoginPage && auth.isAuthenticated && (
+                        {!isLoginPage && token && (
                             <li className="nav-item">
                                 <button className="nav-link navbar-border btn btn-link" onClick={logout}>
                                     <i className="fa-solid fa-sign-out-alt"></i>&nbsp;Logout
@@ -82,7 +82,7 @@ const Navbar = () => {
                         )}
 
                         {/* Otherwise, display a logout button. */}
-                        {!isLoginPage && !auth.isAuthenticated && (
+                        {!isLoginPage && !token && (
                             <li className="nav-item">
                                 <button className="nav-link navbar-border btn btn-link" onClick={handleLoginClick}>
                                     <i className="fa-solid fa-right-to-bracket"></i>&nbsp;Login

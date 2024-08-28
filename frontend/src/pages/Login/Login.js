@@ -11,7 +11,7 @@ import "./Login.scss";
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { auth, login } = useContext(AuthContext);
+    const { token, login } = useContext(AuthContext);
     const navigate = useNavigate();
     const isInitialRender = useRef(true);
 
@@ -40,18 +40,18 @@ const LoginPage = () => {
             return;
         }
 
-        if (auth) {
+        //if (token) {
 
             //console.log(auth);
 
             // Case 1: Error in login (e.g., 500 internal server error)
-            if (auth.user === undefined) {
-                toast.error(String(auth.msg));
+            if (token === undefined) {
+                toast.error('Error!');
             }
 
             // Case 2: Login failed (e.g., incorrect password)
-            else if (auth.user === null) {
-                toast.warn(String(auth.msg));
+            else if (token === null) {
+                toast.warn('Login!');
             }
 
             // Case 3: Login successful
@@ -63,8 +63,8 @@ const LoginPage = () => {
             }
 
             
-        }
-    }, [auth, navigate]);
+        //}
+    }, [token, navigate]);
 
     return (
         <div id="app">

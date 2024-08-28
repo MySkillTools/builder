@@ -24,11 +24,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     // Initial state for authentication context
-    const [auth, setAuth] = useState({
-        user: null,
-        token: localStorage.getItem('token') || null,
-        msg: ''
-    });
+    const [token, setToken] = useState(localStorage.getItem('token'));
 
     /**
      * Checks if the token is valid and fetches user data if so.
@@ -36,43 +32,31 @@ export const AuthProvider = ({ children }) => {
      */
 
     const checkToken = async () => {
-        const default_errmsg = 'Session expired, please log in again';
-        if (auth.token) {
+        //const default_errmsg = 'Session expired, please log in again';
+        if (token) {
             try {
 
                 const response = await apiRequest('/user', 'GET', null, {
-                    'Authorization': `Bearer ${auth.token}`
+                    'Authorization': `Bearer ${token}`
                 });
                 const data = await response.json();
 
-                // Case 1: Token validation passed (200)
+                // Case 1: Token validation passed (200 OK)
                 if (response.ok) {
                     
-                    setAuth({
-                        user: data.user,
-                        token: auth.token,
-                        msg: ''
-                    });
+                    setToken(token);
                 }
-                // Case 2: Token validation failed (401)
+                // Case 2: Token validation failed (401 Unauthorized)
                 else if (response.status === 401) {
 
                     //const errorMsg = data.message || 'An error occurred during login';
-                    setAuth({
-                        user: null,
-                        token: null,
-                        msg: data.message || default_errmsg
-                    });
+                    setToken(null);
                     localStorage.removeItem('token');
                 }
 
                 // Case 3: Token validation error
                 else {
-                    setAuth({
-                        user: undefined,
-                        token: null,
-                        msg: 'An error occurred during token validation. Server returns HTTP status ' + response.status + ' and message ' + data.message
-                    });
+                    setToken(undefined);
                     localStorage.removeItem('token');
                 }
 
@@ -80,11 +64,7 @@ export const AuthProvider = ({ children }) => {
                 //    throw new Error('Invalid token');
                 //}
             } catch (error) {
-                setAuth({
-                    user: undefined,
-                    token: null,
-                    msg: default_errmsg
-                });
+                setToken(undefined);
                 localStorage.removeItem('token');
             }
         }
@@ -102,46 +82,32 @@ export const AuthProvider = ({ children }) => {
             const response = await apiRequest('/login', 'POST', { email, password });
             const data = await response.json();
 
-            console.log(data);
+            //console.log(data);
 
-            // Case 1: Login successful (Returns HTTP 200 OK)
+            // Case 1: Login successful (200 OK)
             if (response.ok) {
-                const { access_token } = data;
-                localStorage.setItem('token', access_token);
-                setAuth({
-                    user: data.user,
-                    token: data.access_token,
-                    msg: data.message || 'Login successful.'
-                });
+                //const { access_token } = data;
+                //console.log(data.access_token)
+
+                localStorage.setItem('token', data.access_token);
+                setToken(data.access_token);
             }
 
-            // Case 2: Login failed (Returns HTTP 401 Unsuthorized)
+            // Case 2: Login failed (401 Unauthorized)
             else if (response.status === 401) {
                 //const errorMsg = data.message || 'An error occurred during login';
-                setAuth({
-                    user: null,
-                    token: null,
-                    msg: data.message || 'Invalid credentials.'
-                });
+                setToken(null);
             }
 
             // Case 3: Login error (Returns any other HTTP status code)
             else {
-                setAuth({
-                    user: undefined,
-                    token: null,
-                    msg: 'An error occurred during login. Server returns HTTP status ' + response.status + ' and message ' + data.message
-                });
+                setToken(undefined);
             }
 
             // Case 3: Any other login error
         } catch (error) {
             //const errorMsg = error.message || 'An unexpected error occurred';
-            setAuth({
-                user: undefined, // Indicating a login error
-                token: null,
-                msg: error.message || 'An unexpected error occurred'
-            });
+            setToken(undefined);
         }
     };
 
@@ -151,15 +117,11 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token');
-        setAuth({
-            user: null,
-            token: null,
-            msg: ''
-        });
+        setToken(null);
     };
 
     return (
-        <AuthContext.Provider value={{ auth, login, logout, checkToken }}>
+        <AuthContext.Provider value={{token, login, logout, checkToken }}>
             {children}
         </AuthContext.Provider>
     );
